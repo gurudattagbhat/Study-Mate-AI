@@ -252,6 +252,40 @@ If you want persistent cloud storage across container restarts:
 
 ---
 
+### 🌐 Deploying on Vercel (Recommended)
+
+#### Option 1: Deploy via Vercel CLI
+1. Install Vercel CLI globally (if not already installed):
+   ```bash
+   npm i -g vercel
+   ```
+2. Log in and deploy:
+   ```bash
+   vercel
+   ```
+3. Follow the prompts (use default project settings). To deploy to production:
+   ```bash
+   vercel --prod
+   ```
+
+#### Option 2: Deploy via Vercel Web Dashboard (GitHub Integration)
+1. Push your code to GitHub:
+   ```bash
+   git add .
+   git commit -m "Prepare for Vercel deployment"
+   git push origin main
+   ```
+2. Import project in [Vercel Dashboard](https://vercel.com/new).
+3. Under **Environment Variables**, add:
+   - `JWT_SECRET`: `your_jwt_secret_key`
+   - `GROQ_API_KEY`: `gsk_your_groq_api_key`
+   - `EMAIL_USER`: `your_email@gmail.com`
+   - `EMAIL_PASS`: `your_gmail_app_password`
+   - `MONGODB_URI`: `mongodb+srv://<user>:<password>@cluster0.mongodb.net/` *(Optional)*
+4. Click **Deploy**. Vercel will instantly build and host your application!
+
+---
+
 ## 📜 License
 
 This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
@@ -261,5 +295,6 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 ## 🤝 Acknowledgments
 
 - [Groq AI Console](https://console.groq.com/) for high-speed LLaMA 3.3 model inference.
-- [Render](https://render.com/) & [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) for free hosting.
+- [Vercel](https://vercel.com/) & [Render](https://render.com/) for cloud hosting.
 - Built with ❤️ for students worldwide.
+
