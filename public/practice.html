@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice & Interactive Tools - Study Mate AI</title>
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link rel="shortcut icon" href="assets/favicon.ico">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+  <!-- SITE HEADER -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="brand-logo">
+        <img src="assets/logo.png" alt="Study Mate AI Logo" style="width:40px;height:40px;border-radius:var(--radius-md);object-fit:cover;transform:scale(1.15);box-shadow:0 3px 12px rgba(16,185,129,0.3);">
+        <span>Study Mate <span style="color:var(--primary);">AI</span></span>
+      </a>
+
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="index.html">🏠 Dashboard</a></li>
+        <li class="nav-item"><a href="ai-suite.html">🤖 AI Suite</a></li>
+        <li class="nav-item"><a href="practice.html" class="active">🎴 Practice Tools</a></li>
+        <li class="nav-item"><a href="planner.html">🗓️ Smart Planner</a></li>
+        <li class="nav-item"><a href="knowledge.html">📚 Knowledge</a></li>
+        <li class="nav-item"><a href="analytics.html">📊 Analytics</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="theme-toggle-btn" onclick="toggleTheme()" title="Toggle Light/Dark Theme">🌙</button>
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()" title="Toggle Menu">☰</button>
+        <a href="settings.html" class="user-chip"><div class="user-avatar">AJ</div><span id="navUserName">Alex</span></a>
+      </div>
+    </div>
+  </header>
+
+  <!-- FLOATING SUB-NAVBAR QUICK PRACTICE BAR -->
+  <nav class="sub-navbar">
+    <div class="container sub-nav-wrapper">
+      <span style="font-size:0.8rem;font-weight:700;color:var(--text-muted);margin-right:0.4rem;">QUICK PRACTICE:</span>
+      <a href="#all" class="sub-nav-item">✨ Show All</a>
+      <a href="#flashcards" class="sub-nav-item">🎴 3D AI Flashcards</a>
+      <a href="#quiz" class="sub-nav-item">❓ AI Quiz Generator</a>
+      <a href="#pomodoro" class="sub-nav-item">⏱️ Focus Pomodoro Timer</a>
+      <a href="#youtube" class="sub-nav-item">🎥 YouTube Video Lectures</a>
+    </div>
+  </nav>
+
+  <main class="container" style="padding-top:2.5rem;padding-bottom:3rem;">
+
+    <!-- 1. 3D FLIPPABLE FLASHCARDS -->
+    <section style="margin-bottom:3.5rem;" id="flashcards">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">🎴 3D Interactive AI Flashcards</h2>
+          <p style="color:var(--text-muted);font-size:0.9rem;">Click card to flip 3D. Master active recall for high exam retentive memory.</p>
+        </div>
+        <div style="display:flex;gap:0.75rem;align-items:center;">
+          <input type="text" class="form-control" id="flashcardTopicInput" value="Web Technologies" style="width:180px;" placeholder="Topic Name">
+          <select class="form-control" id="flashcardCountSelect" style="width:110px;">
+            <option value="5" selected>5 Cards</option>
+            <option value="10">10 Cards</option>
+            <option value="15">15 Cards</option>
+            <option value="20">20 Cards</option>
+          </select>
+          <button class="btn btn-primary" id="generateFlashcardsBtn">✨ Generate Deck</button>
+        </div>
+      </div>
+
+      <!-- 3D Flashcard Wrapper -->
+      <div class="flashcard-container" id="flashcardContainer">
+        <div class="flashcard-inner">
+          <div class="flashcard-front">
+            <div class="card-hint">Question / Concept</div>
+            <div class="card-text" id="cardFrontText">What is the difference between SQL and NoSQL databases?</div>
+            <p style="font-size:0.8rem;color:var(--text-muted);margin-top:1.5rem;">(Click to Flip Card 🔄)</p>
+          </div>
+          <div class="flashcard-back">
+            <div class="card-hint" style="color:var(--accent-gold);">Answer / Explanation</div>
+            <div class="card-text" id="cardBackText">SQL databases are relational and table-based. NoSQL databases are non-relational, schema-less document stores like MongoDB.</div>
+            <p style="font-size:0.8rem;color:var(--text-muted);margin-top:1.5rem;">(Click to Flip Back 🔄)</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:center;align-items:center;gap:1.5rem;">
+        <button class="btn btn-secondary" id="prevCardBtn">← Previous Card</button>
+        <span style="font-weight:700;color:var(--text-muted);" id="cardCounterText">Card 1 of 2</span>
+        <button class="btn btn-secondary" id="nextCardBtn">Next Card →</button>
+      </div>
+    </section>
+
+    <!-- 2. AI QUIZ GENERATOR & RUNNER -->
+    <section style="margin-bottom:3.5rem;" id="quiz">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">❓ AI Practice Quiz Generator</h2>
+          <p style="color:var(--text-muted);font-size:0.9rem;">Generate instant multiple-choice practice tests on any topic.</p>
+        </div>
+      </div>
+
+      <div style="background:var(--bg-surface);border:1px solid var(--border-color);border-radius:var(--radius-lg);padding:1.5rem;box-shadow:var(--shadow-sm);margin-bottom:1.5rem;">
+        <div class="form-grid-4" style="margin-bottom:1.25rem;">
+          <div>
+            <label style="display:block;font-weight:600;font-size:0.85rem;margin-bottom:0.3rem;">Topic Name</label>
+            <input type="text" class="form-control" id="quizTopicInput" value="Operating Systems Process Scheduling" placeholder="Enter topic name...">
+          </div>
+          <div>
+            <label style="display:block;font-weight:600;font-size:0.85rem;margin-bottom:0.3rem;">Difficulty</label>
+            <select class="form-control" id="quizDifficultySelect">
+              <option value="Easy">Easy</option>
+              <option value="Medium" selected>Medium</option>
+              <option value="Hard">Hard</option>
+            </select>
+          </div>
+          <div>
+            <label style="display:block;font-weight:600;font-size:0.85rem;margin-bottom:0.3rem;">No. of Questions</label>
+            <select class="form-control" id="quizCountSelect">
+              <option value="3">3 Questions</option>
+              <option value="5" selected>5 Questions</option>
+              <option value="10">10 Questions</option>
+              <option value="15">15 Questions</option>
+              <option value="20">20 Questions</option>
+            </select>
+          </div>
+          <div style="align-self:flex-end;">
+            <button class="btn btn-primary" id="generateQuizBtn" style="padding:0.75rem 1.25rem;">⚡ Generate Quiz</button>
+          </div>
+        </div>
+
+        <div id="activeQuizBox">
+          <p style="color:var(--text-muted);text-align:center;padding:2rem;">Select question count, difficulty, and click <strong>Generate Quiz</strong> to begin!</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. STUDY TIMER / POMODORO -->
+    <section style="margin-bottom:3.5rem;" id="pomodoro">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">⏱️ Smart Focus Timer & Fullscreen Lock</h2>
+          <p style="color:var(--text-muted);font-size:0.9rem;">Customize focus durations, set break intervals, toggle soothing ambient sounds, and lock into fullscreen focus mode.</p>
+        </div>
+        <button class="btn btn-primary" id="enterFullscreenBtn" style="font-size:0.88rem;padding:0.5rem 1rem;">🖥️ Enter Fullscreen Focus Mode</button>
+      </div>
+
+      <div style="background:var(--bg-surface);border:1px solid var(--border-color);border-radius:var(--radius-lg);padding:2rem;text-align:center;box-shadow:var(--shadow-sm);" id="pomodoroCardContainer">
+        
+        <!-- TIME & INTERVAL CONFIG BAR -->
+        <div style="display:flex;justify-content:center;align-items:center;gap:0.75rem;margin-bottom:1.5rem;flex-wrap:wrap;">
+          <span style="font-size:0.85rem;font-weight:700;color:var(--text-muted);">PRESETS:</span>
+          <button class="btn btn-secondary timer-preset-btn" data-mins="15" style="padding:0.35rem 0.8rem;font-size:0.85rem;">⚡ 15 Min</button>
+          <button class="btn btn-primary timer-preset-btn" data-mins="25" style="padding:0.35rem 0.8rem;font-size:0.85rem;">🎯 25 Min</button>
+          <button class="btn btn-secondary timer-preset-btn" data-mins="45" style="padding:0.35rem 0.8rem;font-size:0.85rem;">🔥 45 Min</button>
+          <button class="btn btn-secondary timer-preset-btn" data-mins="60" style="padding:0.35rem 0.8rem;font-size:0.85rem;">🚀 60 Min</button>
+          
+          <div style="display:inline-flex;align-items:center;gap:0.4rem;margin-left:0.5rem;background:var(--bg-surface-elevated);border:1px solid var(--border-color);padding:0.25rem 0.6rem;border-radius:var(--radius-full);">
+            <span style="font-size:0.8rem;font-weight:600;">Custom Mins:</span>
+            <input type="number" id="customFocusMins" min="1" max="180" value="25" class="form-control" style="width:65px;padding:0.2rem 0.4rem;font-size:0.85rem;text-align:center;">
+            <button class="btn btn-secondary" id="applyCustomTimerBtn" style="padding:0.25rem 0.6rem;font-size:0.8rem;">Set</button>
+          </div>
+        </div>
+
+        <!-- ANIMATED SVG CIRCULAR PROGRESS RING & TIMER DIGITS -->
+        <div class="timer-display-box" style="margin:1.75rem auto;width:250px;height:250px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+          <svg width="250" height="250" style="position:absolute;top:0;left:0;transform:rotate(-90deg);overflow:visible;">
+            <!-- Background Track Circle -->
+            <circle cx="125" cy="125" r="110" stroke="var(--bg-surface-elevated)" stroke-width="12" fill="transparent" />
+            <!-- Dynamic Animated Progress Stroke Ring -->
+            <circle id="timerProgressRing" cx="125" cy="125" r="110" stroke="var(--primary)" stroke-width="12" fill="transparent" stroke-linecap="round" stroke-dasharray="691.15" stroke-dashoffset="0" style="transition: stroke-dashoffset 0.8s linear, stroke 0.5s ease;" />
+          </svg>
+
+          <div style="position:relative;z-index:2;text-align:center;">
+            <div class="timer-digits" id="timerDigitsDisplay" style="font-size:3.5rem;font-weight:800;letter-spacing:-1px;color:var(--text-main);line-height:1;">25:00</div>
+            <div class="timer-phase-badge" id="timerPhaseBadge" style="display:inline-block;padding:0.3rem 0.85rem;background:var(--primary-light);color:var(--primary);border-radius:var(--radius-full);font-size:0.82rem;font-weight:700;margin-top:0.6rem;">🧠 FOCUS SESSION</div>
+          </div>
+        </div>
+
+        <!-- CONTROLS & AMBIENT SOUND BAR -->
+        <div style="display:flex;justify-content:center;align-items:center;gap:1rem;margin-top:1.5rem;flex-wrap:wrap;">
+          <button class="btn btn-primary" id="startTimerBtn" style="padding:0.65rem 1.4rem;font-size:1rem;">▶️ Start Session</button>
+          <button class="btn btn-secondary" id="pauseTimerBtn" style="padding:0.65rem 1.4rem;font-size:1rem;">⏸️ Pause</button>
+          <button class="btn btn-secondary" id="resetTimerBtn" style="padding:0.65rem 1.4rem;font-size:1rem;">🔄 Reset</button>
+          <button class="btn btn-secondary" id="toggleAmbientSoundBtn" style="padding:0.65rem 1rem;font-size:0.9rem;" title="Toggle Soothing Ambient Rain Sounds">🌧️ Ambience Off</button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- FOCUS QUIT GUARD & AI MOTIVATION MODAL -->
+    <div id="focusQuitGuardModal" class="modal hidden" style="position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:99999;display:flex;align-items:center;justify-content:center;padding:1.5rem;">
+      <div style="background:var(--bg-surface);border:1px solid var(--border-color);border-radius:var(--radius-lg);max-width:480px;width:100%;padding:2rem;text-align:center;box-shadow:var(--shadow-lg);position:relative;">
+        <div style="font-size:3.2rem;margin-bottom:0.5rem;">🔥</div>
+        <h3 style="font-size:1.4rem;margin-bottom:0.75rem;color:var(--primary);">Don't Give Up Now!</h3>
+        <p style="color:var(--text-main);font-weight:600;font-size:1rem;margin-bottom:1rem;" id="quitGuardMinsLeftText">You're only a few minutes away from finishing your focus goal.</p>
+        
+        <div style="background:var(--primary-light);border:1px solid var(--primary-border);border-radius:var(--radius-md);padding:1rem;margin-bottom:1.5rem;font-style:italic;font-size:0.92rem;color:var(--primary);line-height:1.5;" id="quitGuardMotivationQuote">
+          "Success isn't always about greatness. It's about consistency. Consistent hard work leads to success. Greatness will come." — Dwayne Johnson
+        </div>
+
+        <div style="display:flex;gap:0.75rem;justify-content:center;">
+          <button class="btn btn-primary" id="resumeFocusBtn" style="padding:0.75rem 1.25rem;font-size:0.95rem;width:100%;">💪 Stay Focused & Resume</button>
+          <button class="btn btn-secondary" id="confirmQuitFocusBtn" style="padding:0.75rem 1.25rem;font-size:0.95rem;color:var(--accent-rose);border-color:var(--accent-rose);">🚪 Quit Session</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. YOUTUBE LEARNING RECOMMENDER WITH IN-PAGE EMBEDDED PLAYER -->
+    <section style="margin-bottom:3rem;" id="youtube">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">🎥 YouTube Curated Learning Lectures</h2>
+          <p style="color:var(--text-muted);font-size:0.9rem;">Real, high-rated educational video lectures with direct card links and in-page embedded YouTube player.</p>
+        </div>
+        <div style="display:flex;gap:0.75rem;">
+          <input type="text" class="form-control" id="youtubeSearchInput" value="Data Structures & Algorithms" style="width:250px;">
+          <button class="btn btn-primary" id="searchYoutubeBtn">🔍 Search Lectures</button>
+        </div>
+      </div>
+
+      <div class="card-grid" id="youtubeResultsGrid" style="grid-template-columns:repeat(auto-fill, minmax(320px, 1fr));">
+        <!-- Loaded via JS -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- YOUTUBE EMBEDDED PLAYER MODAL -->
+  <div id="youtubePlayerModal" class="hidden" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(15,23,42,0.85);backdrop-filter:blur(6px);z-index:9999;display:flex;justify-content:center;align-items:center;padding:1rem;">
+    <div style="background:var(--bg-surface-elevated);border:1px solid var(--border-color);border-radius:var(--radius-lg);width:100%;max-width:920px;overflow:hidden;box-shadow:var(--shadow-xl);position:relative;">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:1rem 1.5rem;background:var(--bg-surface);border-bottom:1px solid var(--border-color);">
+        <div style="display:flex;align-items:center;gap:0.5rem;">
+          <span style="font-size:1.4rem;">🎥</span>
+          <h3 id="ytModalTitle" style="font-size:1.05rem;color:var(--primary);margin:0;">YouTube Video Lecture</h3>
+        </div>
+        <button onclick="closeYoutubeModal()" class="btn btn-secondary" style="padding:0.3rem 0.8rem;font-size:0.85rem;">✕ Close Player</button>
+      </div>
+      <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;background:#000;">
+        <iframe id="ytModalIframe" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container"><p>© 2026 Study Mate AI — Practice Suite</p></div>
+  </footer>
+
+  <script src="js/theme.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/practice.js"></script>
+</body>
+</html>

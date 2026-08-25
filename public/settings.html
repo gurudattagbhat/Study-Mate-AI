@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile & Account Settings - Study Mate AI</title>
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link rel="shortcut icon" href="assets/favicon.ico">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <style>
+    .hidden { display: none !important; }
+    .settings-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow-sm);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SITE HEADER -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="brand-logo">
+        <img src="assets/logo.png" alt="Study Mate AI Logo" style="width:40px;height:40px;border-radius:var(--radius-md);object-fit:cover;transform:scale(1.15);box-shadow:0 3px 12px rgba(16,185,129,0.3);">
+        <span>Study Mate <span style="color:var(--primary);">AI</span></span>
+      </a>
+
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="index.html">🏠 Dashboard</a></li>
+        <li class="nav-item"><a href="ai-suite.html">🤖 AI Suite</a></li>
+        <li class="nav-item"><a href="practice.html">🎴 Practice Tools</a></li>
+        <li class="nav-item"><a href="planner.html">🗓️ Smart Planner</a></li>
+        <li class="nav-item"><a href="knowledge.html">📚 Knowledge</a></li>
+        <li class="nav-item"><a href="analytics.html">📊 Analytics</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="theme-toggle-btn" onclick="toggleTheme()" title="Toggle Light/Dark Theme">🌙</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN SETTINGS CONTAINER -->
+  <main class="container" style="padding-top:2.5rem;padding-bottom:4rem;">
+    <div style="max-width:850px;margin:0 auto;">
+      
+      <div style="margin-bottom:2rem;">
+        <h1 style="font-size:2rem;margin-bottom:0.4rem;">👤 Profile & Account Management</h1>
+        <p style="color:var(--text-muted);font-size:0.95rem;">Manage your personal profile, security credentials, Groq AI API keys, and account preferences.</p>
+      </div>
+
+      <!-- USER STATS SUMMARY CARD -->
+      <div style="background:linear-gradient(135deg, var(--primary-light), var(--bg-surface));border:1px solid var(--primary-border);border-radius:var(--radius-lg);padding:1.5rem 1.75rem;margin-bottom:2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <div id="settingsBigAvatar" style="width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg, var(--primary), #6366F1);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:800;">
+            G
+          </div>
+          <div>
+            <h3 id="settingsDisplayName" style="margin-bottom:0.25rem;">Gurudas</h3>
+            <p id="settingsDisplayEmail" style="color:var(--text-muted);font-size:0.85rem;">student@example.com</p>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+          <div style="background:var(--bg-surface);padding:0.6rem 1rem;border-radius:var(--radius-md);border:1px solid var(--border-color);text-align:center;">
+            <div style="font-size:0.75rem;color:var(--text-muted);font-weight:600;text-transform:uppercase;">Level</div>
+            <div id="settingsLevelBadge" style="font-size:1.1rem;font-weight:800;color:var(--primary);">Level 3</div>
+          </div>
+          <div style="background:var(--bg-surface);padding:0.6rem 1rem;border-radius:var(--radius-md);border:1px solid var(--border-color);text-align:center;">
+            <div style="font-size:0.75rem;color:var(--text-muted);font-weight:600;text-transform:uppercase;">Total EXP</div>
+            <div id="settingsExpBadge" style="font-size:1.1rem;font-weight:800;color:var(--accent-gold);">1,250 PTS</div>
+          </div>
+          <div style="background:var(--bg-surface);padding:0.6rem 1rem;border-radius:var(--radius-md);border:1px solid var(--border-color);text-align:center;">
+            <div style="font-size:0.75rem;color:var(--text-muted);font-weight:600;text-transform:uppercase;">Study Streak</div>
+            <div id="settingsStreakBadge" style="font-size:1.1rem;font-weight:800;color:var(--accent-rose);">🔥 5 Days</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 1: EDIT PROFILE -->
+      <div class="settings-card">
+        <h3 style="margin-bottom:1.25rem;color:var(--primary);display:flex;align-items:center;gap:0.5rem;">
+          <span>✏️</span> Edit Personal Details
+        </h3>
+
+        <form id="profileForm" onsubmit="handleUpdateProfile(event)">
+          <div class="form-grid-2" style="margin-bottom:1.25rem;">
+            <div>
+              <label style="display:block;font-weight:600;margin-bottom:0.4rem;font-size:0.9rem;" for="settingNameInput">Full Name</label>
+              <input type="text" class="form-control" id="settingNameInput" placeholder="Enter your full name" required>
+            </div>
+            <div>
+              <label style="display:block;font-weight:600;margin-bottom:0.4rem;font-size:0.9rem;" for="settingEmailInput">Email Address</label>
+              <input type="email" class="form-control" id="settingEmailInput" readonly style="background:var(--bg-surface-elevated);cursor:not-allowed;" title="Email address cannot be changed">
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary" id="saveProfileBtn">💾 Save Profile Updates</button>
+        </form>
+      </div>
+
+      <!-- SECTION 2: CHANGE PASSWORD -->
+      <div class="settings-card">
+        <h3 style="margin-bottom:1.25rem;color:var(--primary);display:flex;align-items:center;gap:0.5rem;">
+          <span>🔑</span> Change Account Password
+        </h3>
+
+        <form id="changePasswordForm" onsubmit="handleChangePassword(event)">
+          <div style="margin-bottom:1.1rem;">
+            <label style="display:block;font-weight:600;margin-bottom:0.4rem;font-size:0.9rem;" for="currentPasswordInput">Current Password</label>
+            <div class="password-input-group">
+              <input type="password" class="form-control" id="currentPasswordInput" placeholder="••••••••" required>
+            </div>
+          </div>
+
+          <div class="form-grid-2" style="margin-bottom:1.5rem;">
+            <div>
+              <label style="display:block;font-weight:600;margin-bottom:0.4rem;font-size:0.9rem;" for="newPasswordInput">New Password</label>
+              <input type="password" class="form-control" id="newPasswordInput" placeholder="At least 6 characters" minlength="6" required>
+            </div>
+            <div>
+              <label style="display:block;font-weight:600;margin-bottom:0.4rem;font-size:0.9rem;" for="confirmNewPasswordInput">Confirm New Password</label>
+              <input type="password" class="form-control" id="confirmNewPasswordInput" placeholder="Re-enter new password" minlength="6" required>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary" id="updatePasswordBtn">🔐 Update Password</button>
+        </form>
+      </div>
+
+      <!-- SECTION 3: STUDY MATE AI API KEY CONFIG -->
+      <div class="settings-card">
+        <h3 style="margin-bottom:0.5rem;color:var(--primary);display:flex;align-items:center;gap:0.5rem;">
+          <span>🤖</span> Study Mate AI Integration Key
+        </h3>
+        <p style="color:var(--text-muted);font-size:0.88rem;margin-bottom:1.25rem;">
+          Study Mate AI comes with a built-in AI key. If you wish to use your own personal API Key for dedicated throughput, enter it below.
+        </p>
+
+        <form id="groqKeyForm" onsubmit="handleSaveGroqKey(event)">
+          <div style="margin-bottom:1.25rem;">
+            <label style="display:block;font-weight:600;margin-bottom:0.4rem;font-size:0.9rem;" for="groqApiKeyInput">Custom API Key (Optional)</label>
+            <input type="text" class="form-control" id="groqApiKeyInput" placeholder="gsk_..." style="font-family:monospace;">
+          </div>
+          <button type="submit" class="btn btn-secondary" id="saveGroqKeyBtn">⚡ Save API Key</button>
+        </form>
+      </div>
+
+      <!-- SECTION 4: DANGER ZONE - DELETE ACCOUNT -->
+      <div style="background:var(--bg-surface);border:1px solid var(--accent-rose);border-radius:var(--radius-lg);padding:1.75rem;box-shadow:var(--shadow-sm);">
+        <h3 style="color:var(--accent-rose);margin-bottom:0.5rem;display:flex;align-items:center;gap:0.5rem;">
+          <span>⚠️</span> Danger Zone — Delete Account
+        </h3>
+        <p style="color:var(--text-muted);font-size:0.88rem;margin-bottom:1.25rem;">
+          Permanently delete your account, saved notes, flashcard decks, study schedules, and quiz history. This action cannot be undone.
+        </p>
+        <button class="btn btn-danger" onclick="openModal('deleteAccountModal')" style="background:var(--accent-rose);color:#fff;border:none;padding:0.75rem 1.4rem;font-weight:700;border-radius:var(--radius-md);cursor:pointer;">🗑️ Delete My Account Permanently</button>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- DELETE ACCOUNT CONFIRMATION MODAL -->
+  <div class="modal-backdrop" id="deleteAccountModal">
+    <div class="modal-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem;">
+        <h3 style="color:var(--accent-rose);">⚠️ Confirm Account Deletion</h3>
+        <button class="btn btn-secondary" onclick="closeModal('deleteAccountModal')" style="padding:0.2rem 0.6rem;">✕</button>
+      </div>
+
+      <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:1.25rem;">
+        Are you sure you want to delete your Study Mate AI account? Please enter your current password below to confirm deletion.
+      </p>
+
+      <form id="deleteAccountForm" onsubmit="handleConfirmDeleteAccount(event)">
+        <div style="margin-bottom:1.5rem;">
+          <label style="display:block;font-weight:600;font-size:0.88rem;margin-bottom:0.4rem;" for="deleteAccountPassword">Current Password</label>
+          <input type="password" class="form-control" id="deleteAccountPassword" placeholder="••••••••" required>
+        </div>
+
+        <div style="display:flex;gap:0.75rem;justify-content:flex-end;">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('deleteAccountModal')">Cancel</button>
+          <button type="submit" class="btn btn-danger" id="confirmDeleteBtn" style="background:var(--accent-rose);color:#fff;border:none;padding:0.6rem 1.2rem;font-weight:700;border-radius:var(--radius-md);cursor:pointer;">Yes, Delete Account</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container"><p>© 2026 Study Mate AI — Profile & Security Management</p></div>
+  </footer>
+
+  <script src="js/theme.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/settings.js"></script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Log In - Study Mate AI</title>
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link rel="shortcut icon" href="assets/favicon.ico">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+  <!-- SITE HEADER -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="brand-logo">
+        <img src="assets/logo.png" alt="Study Mate AI Logo" style="width:40px;height:40px;border-radius:var(--radius-md);object-fit:cover;transform:scale(1.15);box-shadow:0 3px 12px rgba(16,185,129,0.3);">
+        <span>Study Mate <span style="color:var(--primary);">AI</span></span>
+      </a>
+
+      <div class="nav-actions">
+        <button class="theme-toggle-btn" onclick="toggleTheme()" title="Toggle Light/Dark Theme">🌙</button>
+        <a href="signup.html" class="btn btn-primary" style="padding:0.5rem 1.1rem;font-size:0.85rem;">Sign Up Free</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- SPLIT SCREEN LOGIN CONTAINER -->
+  <div class="auth-page-wrapper">
+    <div class="auth-split-card">
+      
+      <!-- LEFT COLUMN: VISUAL BRAND BANNER -->
+      <div class="auth-banner-col">
+        <div>
+          <div style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.4rem 0.9rem;background:var(--primary-light);color:var(--primary);border-radius:var(--radius-full);font-size:0.85rem;font-weight:700;margin-bottom:1.5rem;">
+            ✨ Academic Learning Suite
+          </div>
+          <h2 style="font-size:2rem;line-height:1.2;margin-bottom:1rem;">Welcome Back to Your <span style="color:var(--primary);">AI Study Companion</span></h2>
+          <p style="color:var(--text-muted);font-size:0.95rem;margin-bottom:2rem;">Log in to access your interactive Study Mate AI tutor, 3D flashcards, timetable schedules, and personalized exam revision guides.</p>
+
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;font-weight:600;font-size:0.9rem;color:var(--text-main);">
+            <li style="display:flex;align-items:center;gap:0.6rem;"><span style="color:var(--primary);">✓</span> Study Mate AI Academic Assistant & Viva Prep</li>
+            <li style="display:flex;align-items:center;gap:0.6rem;"><span style="color:var(--primary);">✓</span> Automated Spaced Repetition Revision Planner</li>
+            <li style="display:flex;align-items:center;gap:0.6rem;"><span style="color:var(--primary);">✓</span> PDF Summarizer & Image OCR Scanner</li>
+          </ul>
+        </div>
+
+        <div style="border-top:1px solid var(--border-color);padding-top:1.5rem;margin-top:2rem;">
+          <p style="font-size:0.85rem;color:var(--text-muted);font-style:italic;">"Study Mate AI helped me score top grades on my Computer Science mid-terms!"</p>
+          <div style="font-weight:700;font-size:0.85rem;margin-top:0.4rem;color:var(--primary);">— Computer Science Student</div>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: LOGIN FORM -->
+      <div class="auth-form-col">
+        <div style="margin-bottom:2rem;">
+          <h1 style="font-size:1.8rem;margin-bottom:0.4rem;">Account Login</h1>
+          <p style="color:var(--text-muted);font-size:0.9rem;">Enter your email credentials to access your dashboard</p>
+        </div>
+
+        <form id="loginForm" onsubmit="handleLoginSubmit(event)">
+          <div style="margin-bottom:1.25rem;">
+            <label style="display:block;font-weight:600;font-size:0.9rem;margin-bottom:0.4rem;" for="loginEmail">Email Address</label>
+            <input type="email" id="loginEmail" class="form-control" placeholder="name@example.com" required>
+          </div>
+
+          <div style="margin-bottom:1.25rem;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.4rem;">
+              <label style="font-weight:600;font-size:0.9rem;margin-bottom:0;" for="loginPassword">Password</label>
+              <a href="forgot-password.html" style="font-size:0.85rem;font-weight:600;color:var(--primary);">Forgot Password?</a>
+            </div>
+            <div class="password-input-group">
+              <input type="password" id="loginPassword" class="form-control" placeholder="••••••••" required>
+              <span class="password-toggle-icon" onclick="togglePasswordVisibility('loginPassword', this)">👁️</span>
+            </div>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:1.5rem;">
+            <input type="checkbox" id="rememberMe" checked style="width:16px;height:16px;cursor:pointer;">
+            <label for="rememberMe" style="font-size:0.85rem;color:var(--text-muted);cursor:pointer;">Keep me logged in</label>
+          </div>
+
+          <button type="submit" class="btn btn-primary" id="loginSubmitBtn" style="width:100%;padding:0.8rem;font-size:1rem;">Log In 🚀</button>
+        </form>
+
+        <div style="text-align:center;margin-top:1.75rem;font-size:0.9rem;color:var(--text-muted);">
+          Don't have an account yet? <a href="signup.html" style="font-weight:700;">Sign up for free</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container"><p>© 2026 Study Mate AI — User Authentication</p></div>
+  </footer>
+
+  <script src="js/theme.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    function togglePasswordVisibility(inputId, icon) {
+      const input = document.getElementById(inputId);
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.textContent = '🙈';
+      } else {
+        input.type = 'password';
+        icon.textContent = '👁️';
+      }
+    }
+
+    async function handleLoginSubmit(e) {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value.trim();
+      const submitBtn = document.getElementById('loginSubmitBtn');
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '⏳ Logging in...';
+
+      const res = await apiFetch('/auth/login', {
+        method: 'POST',
+        body: JSON.stringify({ email, password })
+      });
+
+      if (res.success) {
+        localStorage.setItem('studymate_token', res.token);
+        if (res.user) {
+          localStorage.setItem('studymate_user_cache', JSON.stringify(res.user));
+        }
+        showToast('Login successful! Redirecting...', 'success');
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 500);
+      } else {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = 'Log In 🚀';
+        showToast(res.message || 'Login failed', 'error');
+      }
+    }
+  </script>
+</body>
+</html>

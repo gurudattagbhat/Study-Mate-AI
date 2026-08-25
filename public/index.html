@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Study Mate AI - Next-Gen Academic Study Assistant</title>
+  <meta name="description" content="AI-powered study suite with Study Mate AI tutor, PDF analyzer, syllabus breakdown, interactive flashcards, timetables, and viva preparation.">
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link rel="shortcut icon" href="assets/favicon.ico">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body class="dashboard-page">
+
+  <!-- SITE HEADER WITH DYNAMIC NAVBAR -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="brand-logo">
+        <img src="assets/logo.png" alt="Study Mate AI Logo" style="width:40px;height:40px;border-radius:var(--radius-md);object-fit:cover;transform:scale(1.15);box-shadow:0 3px 12px rgba(16,185,129,0.3);">
+        <span>Study Mate <span style="color:var(--primary);">AI</span></span>
+      </a>
+
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="index.html" class="active">🏠 Dashboard</a></li>
+        <li class="nav-item"><a href="ai-suite.html">🤖 AI Suite</a></li>
+        <li class="nav-item"><a href="practice.html">🎴 Practice Tools</a></li>
+        <li class="nav-item"><a href="planner.html">🗓️ Smart Planner</a></li>
+        <li class="nav-item"><a href="knowledge.html">📚 Knowledge</a></li>
+        <li class="nav-item"><a href="analytics.html">📊 Analytics</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="theme-toggle-btn" onclick="toggleTheme()" id="themeToggleBtn" title="Toggle Light/Dark Theme">🌙</button>
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()" title="Toggle Menu">☰</button>
+
+        <!-- DYNAMIC AUTH BUTTONS -->
+        <a href="login.html" class="btn btn-secondary" style="padding:0.45rem 0.9rem;font-size:0.85rem;">🔑 Log In</a>
+        <a href="signup.html" class="btn btn-primary" style="padding:0.45rem 0.9rem;font-size:0.85rem;">✨ Sign Up Free</a>
+
+        <a href="settings.html" class="user-chip" style="display:none;" title="Account Settings">
+          <div class="user-avatar" id="navAvatar">AJ</div>
+          <span style="font-weight:600;font-size:0.9rem;" id="navUserName">Alex</span>
+          <span style="color:var(--accent-gold);font-weight:700;font-size:0.85rem;" id="navStreakChip">🔥 <span id="navStreakCount">5</span></span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO WELCOME BANNER -->
+  <section class="hero-banner">
+    <div class="container hero-grid">
+      <div>
+        <h1 class="hero-title">Elevate Your Grades with <span>Intelligent AI Learning</span></h1>
+        <p class="hero-subtitle">Your all-in-one personal study companion. Analyze PDFs, simulate oral viva exams, generate 3D flashcards, master weak topics, and optimize study timetables.</p>
+        
+        <!-- HERO DYNAMIC ACTION BUTTONS -->
+        <div id="heroActionBtns" style="display:flex;gap:1rem;flex-wrap:wrap;">
+          <a href="login.html" class="btn btn-primary" style="padding:0.75rem 1.6rem;font-size:1rem;">🔑 Log In to Account</a>
+          <a href="signup.html" class="btn btn-secondary" style="padding:0.75rem 1.6rem;font-size:1rem;">✨ Sign Up Free</a>
+          <a href="ai-suite.html" class="btn btn-secondary" style="padding:0.75rem 1.6rem;font-size:1rem;">🤖 Try AI Tutor</a>
+        </div>
+      </div>
+
+      <div class="hero-graphics-frame">
+        <img src="assets/hero.jpg" alt="Study Mate AI Graphic" class="hero-graphics-img">
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN DASHBOARD CONTENT -->
+  <main class="container" style="padding-top:2rem;padding-bottom:3rem;">
+    
+    <!-- STATS STRIP -->
+    <div class="stats-strip">
+      <div class="stat-box">
+        <div class="stat-icon">🔥</div>
+        <div>
+          <div class="stat-number" id="dashStreak" style="color:var(--accent-gold);">5</div>
+          <div class="stat-label">Daily Study Streak</div>
+        </div>
+      </div>
+
+      <div class="stat-box">
+        <div class="stat-icon">🎓</div>
+        <div>
+          <div class="stat-number" id="dashLevel" style="color:var(--primary);">Lvl 3</div>
+          <div class="stat-label" id="dashExp">1250 EXP</div>
+        </div>
+      </div>
+
+      <div class="stat-box">
+        <div class="stat-icon">📚</div>
+        <div>
+          <div class="stat-number" id="dashNotesCount">2</div>
+          <div class="stat-label">Study Notes</div>
+        </div>
+      </div>
+
+      <div class="stat-box">
+        <div class="stat-icon">📝</div>
+        <div>
+          <div class="stat-number" id="dashPendingTasks" style="color:var(--accent-rose);">1</div>
+          <div class="stat-label">Pending Tasks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HUB FEATURE CARDS LAUNCHPAD -->
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">✨ Study Features Hub</h2>
+        <p style="color:var(--text-muted);font-size:0.95rem;">Grouped tools to accelerate your revision, prep for exams, and manage coursework.</p>
+      </div>
+      <div id="sectionHeaderAuthBtns" style="display:flex;gap:0.75rem;">
+        <a href="login.html" class="btn btn-secondary" style="font-size:0.85rem;">🔑 Account Log In</a>
+        <a href="signup.html" class="btn btn-primary" style="font-size:0.85rem;">✨ Sign Up Free</a>
+      </div>
+    </div>
+
+    <div class="card-grid">
+
+      <!-- Hub 1: AI Suite -->
+      <div class="feature-card card-bg-tutor" onclick="window.location.href='ai-suite.html'">
+        <div class="card-icon-box bg-emerald-light">🤖</div>
+        <h3 class="card-title">AI Study Assistant & Tutor</h3>
+        <p class="card-desc">Interactive Study Mate AI chatbot for instant concept explanations, step-by-step math help, and code breakdown.</p>
+        <span class="card-action-btn">Launch Tutor →</span>
+      </div>
+
+      <!-- Hub 2: PDF Analyzer -->
+      <div class="feature-card card-bg-pdf" onclick="window.location.href='ai-suite.html#pdf'">
+        <div class="card-icon-box bg-purple-light">📄</div>
+        <h3 class="card-title">PDF & Document Analyzer</h3>
+        <p class="card-desc">Extract key summaries, core definitions, practice exam questions, and estimated study duration from notes.</p>
+        <span class="card-action-btn">Analyze Document →</span>
+      </div>
+
+      <!-- Hub 3: AI Image Scanner -->
+      <div class="feature-card card-bg-ocr" onclick="window.location.href='ai-suite.html#ocr'">
+        <div class="card-icon-box bg-gold-light">📸</div>
+        <h3 class="card-title">AI Image & Note Scanner</h3>
+        <p class="card-desc">Scan handwritten whiteboard or notebook photos using OCR and receive AI structured summaries.</p>
+        <span class="card-action-btn">Scan Image →</span>
+      </div>
+
+      <!-- Hub 4: AI Viva Examiner -->
+      <div class="feature-card card-bg-viva" onclick="window.location.href='ai-suite.html#viva'">
+        <div class="card-icon-box bg-rose-light">🎤</div>
+        <h3 class="card-title">AI Viva Examination Prep</h3>
+        <p class="card-desc">Simulate realistic university oral viva exams with AI score cards and follow-up examiner questions.</p>
+        <span class="card-action-btn">Start Viva Prep →</span>
+      </div>
+
+      <!-- Hub 5: Quiz Generator -->
+      <div class="feature-card card-bg-quiz" onclick="window.location.href='practice.html#quiz'">
+        <div class="card-icon-box bg-emerald-light">❓</div>
+        <h3 class="card-title">AI Quiz Generator</h3>
+        <p class="card-desc">Generate tailored multiple-choice practice quizzes by subject and difficulty with live scoring.</p>
+        <span class="card-action-btn">Take Quiz →</span>
+      </div>
+
+      <!-- Hub 6: 3D Flashcards -->
+      <div class="feature-card card-bg-flashcards" onclick="window.location.href='practice.html#flashcards'">
+        <div class="card-icon-box bg-purple-light">🎴</div>
+        <h3 class="card-title">3D AI Flashcards</h3>
+        <p class="card-desc">Create 3D flippable flashcard decks for active recall and spaced repetition training.</p>
+        <span class="card-action-btn">Flip Decks →</span>
+      </div>
+
+      <!-- Hub 7: Smart Timetable -->
+      <div class="feature-card card-bg-planner" onclick="window.location.href='planner.html#timetable'">
+        <div class="card-icon-box bg-gold-light">🗓️</div>
+        <h3 class="card-title">Smart Timetable & Planner</h3>
+        <p class="card-desc">Organize weekly lecture schedules, automated conflict detection, and academic assignment trackers.</p>
+        <span class="card-action-btn">View Timetable →</span>
+      </div>
+
+      <!-- Hub 8: Pomodoro Timer -->
+      <div class="feature-card card-bg-timer" onclick="window.location.href='practice.html#pomodoro'">
+        <div class="card-icon-box bg-rose-light">⏱️</div>
+        <h3 class="card-title">Study Timer / Pomodoro</h3>
+        <p class="card-desc">Focus session clock with 25/5 min timers, focus sound machine, and session logs.</p>
+        <span class="card-action-btn">Start Focus Timer →</span>
+      </div>
+
+      <!-- Hub 10: Progress & Gamification -->
+      <div class="feature-card card-bg-analytics" onclick="window.location.href='analytics.html'">
+        <div class="card-icon-box bg-purple-light">🏆</div>
+        <h3 class="card-title">Progress & Gamification</h3>
+        <p class="card-desc">Track study hours, unlock achievement badges, level up your EXP, and maintain streak records.</p>
+        <span class="card-action-btn">View Leaderboard →</span>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- SITE FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2026 <strong>Study Mate AI</strong> — Built with HTML, Vanilla CSS, JS, Node.js, Express & Groq LLM</p>
+    </div>
+  </footer>
+
+  <script src="js/theme.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

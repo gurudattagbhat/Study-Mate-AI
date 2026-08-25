@@ -1,0 +1,298 @@
+/* ==========================================================================
+   INTERACTIVE COMPONENTS CSS
+   ========================================================================== */
+
+/* 1. 3D FLIPPABLE FLASHCARDS */
+.flashcard-container {
+  perspective: 1000px;
+  width: 100%;
+  max-width: 540px;
+  height: 320px;
+  margin: 0 auto 1.5rem auto;
+  cursor: pointer;
+}
+
+.flashcard-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+  box-shadow: var(--shadow-lg);
+  border-radius: var(--radius-lg);
+}
+
+.flashcard-container.flipped .flashcard-inner {
+  transform: rotateY(180deg);
+}
+
+.flashcard-front, .flashcard-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-color);
+  background: var(--bg-surface);
+}
+
+.flashcard-front {
+  background: linear-gradient(135deg, var(--bg-surface), var(--bg-surface-elevated));
+}
+
+.flashcard-back {
+  transform: rotateY(180deg);
+  background: linear-gradient(135deg, var(--primary-light), var(--bg-surface));
+  border-color: var(--primary-border);
+}
+
+.card-hint {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--primary);
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.card-text {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-main);
+  line-height: 1.5;
+}
+
+/* 2. POMODORO TIMER CLOCK */
+.timer-display-box {
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 1.5rem auto;
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  transition: all var(--transition-fast);
+}
+
+.timer-digits {
+  font-family: var(--font-heading);
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: var(--text-main);
+  line-height: 1;
+}
+
+.timer-phase-badge {
+  margin-top: 0.5rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: var(--radius-full);
+  background: var(--primary-light);
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+/* 3. VIVA PREP AUDIO VISUALIZER */
+.viva-visualizer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 48px;
+  margin: 1rem 0;
+}
+
+.audio-bar {
+  width: 6px;
+  height: 12px;
+  background: var(--primary);
+  border-radius: 3px;
+  animation: pulseBar 1.2s infinite ease-in-out;
+}
+
+.audio-bar:nth-child(2) { animation-delay: 0.2s; }
+.audio-bar:nth-child(3) { animation-delay: 0.4s; }
+.audio-bar:nth-child(4) { animation-delay: 0.1s; }
+.audio-bar:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes pulseBar {
+  0%, 100% { height: 12px; }
+  50% { height: 42px; }
+}
+
+/* 4. CHAT ASSISTANT BUBBLES */
+.chat-window {
+  display: flex;
+  flex-direction: column;
+  height: 520px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface);
+  overflow: hidden;
+  position: relative;
+}
+
+.chat-messages {
+  flex-grow: 1;
+  padding: 1.25rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  scroll-behavior: smooth;
+}
+
+.chat-bubble {
+  max-width: 80%;
+  padding: 0.9rem 1.2rem;
+  border-radius: 16px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.chat-bubble.user {
+  align-self: flex-end;
+  background: var(--primary);
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+
+.chat-bubble.ai {
+  align-self: flex-start;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  border-bottom-left-radius: 4px;
+}
+
+.chat-input-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  border-top: 1px solid var(--border-color);
+  background: var(--bg-surface);
+}
+
+/* 5. GAMIFICATION STREAK FLAME & BADGES */
+.streak-flame {
+  font-size: 1.4rem;
+  animation: flameBounce 1.5s infinite ease-in-out;
+}
+
+@keyframes flameBounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+.badge-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1rem;
+}
+
+.badge-card {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  text-align: center;
+  transition: all var(--transition-fast);
+}
+
+.badge-card.unlocked {
+  border-color: var(--accent-gold);
+  background: var(--accent-gold-light);
+}
+
+.badge-icon {
+  font-size: 2.2rem;
+  margin-bottom: 0.4rem;
+}
+
+.badge-name {
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+/* ==========================================================================
+   COMPONENTS MOBILE RESPONSIVE MEDIA QUERIES (<= 768px & <= 480px)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .flashcard-container {
+    height: 280px;
+    margin-bottom: 1.25rem;
+  }
+
+  .flashcard-front, .flashcard-back {
+    padding: 1.25rem 1rem;
+  }
+
+  .card-text {
+    font-size: 1.1rem;
+  }
+
+  .chat-window {
+    height: 460px;
+  }
+
+  .chat-bubble {
+    max-width: 90%;
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .chat-input-bar {
+    padding: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .flashcard-container {
+    height: 260px;
+  }
+
+  .card-text {
+    font-size: 1.02rem;
+  }
+
+  .timer-display-box {
+    width: 210px;
+    height: 210px;
+    margin: 1.25rem auto;
+  }
+
+  .timer-display-box svg {
+    width: 210px;
+    height: 210px;
+  }
+
+  .timer-display-box svg circle {
+    cx: 105;
+    cy: 105;
+    r: 90;
+    stroke-dasharray: 565.48;
+  }
+
+  .timer-digits {
+    font-size: 2.8rem;
+  }
+
+  .badge-grid {
+    grid-template-columns: repeat(auto-fill, minmax(115px, 1fr));
+    gap: 0.75rem;
+  }
+}
+

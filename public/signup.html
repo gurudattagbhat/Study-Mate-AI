@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up Free - Study Mate AI</title>
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link rel="shortcut icon" href="assets/favicon.ico">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+  <!-- SITE HEADER -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="brand-logo">
+        <img src="assets/logo.png" alt="Study Mate AI Logo" style="width:40px;height:40px;border-radius:var(--radius-md);object-fit:cover;transform:scale(1.15);box-shadow:0 3px 12px rgba(16,185,129,0.3);">
+        <span>Study Mate <span style="color:var(--primary);">AI</span></span>
+      </a>
+
+      <div class="nav-actions">
+        <button class="theme-toggle-btn" onclick="toggleTheme()" title="Toggle Light/Dark Theme">🌙</button>
+        <a href="login.html" class="btn btn-secondary" style="padding:0.5rem 1.1rem;font-size:0.85rem;">Log In</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- SPLIT SCREEN SIGNUP CONTAINER -->
+  <div class="auth-page-wrapper">
+    <div class="auth-split-card">
+      
+      <!-- LEFT COLUMN: VISUAL BRAND BANNER -->
+      <div class="auth-banner-col">
+        <div>
+          <div style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.4rem 0.9rem;background:var(--primary-light);color:var(--primary);border-radius:var(--radius-full);font-size:0.85rem;font-weight:700;margin-bottom:1.5rem;">
+            🚀 Join Study Mate AI Community
+          </div>
+          <h2 style="font-size:2rem;line-height:1.2;margin-bottom:1rem;">Supercharge Your Study Routine with <span style="color:var(--primary);">Study Mate AI</span></h2>
+          <p style="color:var(--text-muted);font-size:0.95rem;margin-bottom:2rem;">Create your free account today and unlock smart revision planners, 3D flashcards, viva prep simulators, and PDF analyzers.</p>
+
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:0.75rem;font-weight:600;font-size:0.9rem;color:var(--text-main);">
+            <li style="display:flex;align-items:center;gap:0.6rem;"><span style="color:var(--primary);">✓</span> Instant Email OTP Secure Verification</li>
+            <li style="display:flex;align-items:center;gap:0.6rem;"><span style="color:var(--primary);">✓</span> Automated Study Mate AI System Integration</li>
+            <li style="display:flex;align-items:center;gap:0.6rem;"><span style="color:var(--primary);">✓</span> 100% Free Access for Students</li>
+          </ul>
+        </div>
+
+        <div style="border-top:1px solid var(--border-color);padding-top:1.5rem;margin-top:2rem;">
+          <p style="font-size:0.85rem;color:var(--text-muted);font-style:italic;">"The 3D flashcards and AI tutor make exam preparation 10x faster!"</p>
+          <div style="font-weight:700;font-size:0.85rem;margin-top:0.4rem;color:var(--primary);">— MCA Student</div>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: SIGNUP FORM & OTP STEP -->
+      <div class="auth-form-col">
+        <div style="margin-bottom:1.75rem;">
+          <h1 style="font-size:1.8rem;margin-bottom:0.4rem;">Create Account</h1>
+          <p style="color:var(--text-muted);font-size:0.9rem;">Sign up in 30 seconds with email verification</p>
+        </div>
+
+        <!-- STEP 1: REGISTRATION DETAILS -->
+        <div id="signupStep1">
+          <form onsubmit="handleRequestSignupOtp(event)">
+            <div style="margin-bottom:1.1rem;">
+              <label style="display:block;font-weight:600;font-size:0.85rem;margin-bottom:0.3rem;" for="signupName">Full Name</label>
+              <input type="text" id="signupName" class="form-control" placeholder="Alex Johnson" required>
+            </div>
+
+            <div style="margin-bottom:1.1rem;">
+              <label style="display:block;font-weight:600;font-size:0.85rem;margin-bottom:0.3rem;" for="signupEmail">Email Address</label>
+              <input type="email" id="signupEmail" class="form-control" placeholder="alex@university.edu" required>
+            </div>
+
+            <div style="margin-bottom:1.1rem;">
+              <label style="display:block;font-weight:600;font-size:0.85rem;margin-bottom:0.3rem;" for="signupPassword">Password</label>
+              <div class="password-input-group">
+                <input type="password" id="signupPassword" class="form-control" placeholder="At least 6 characters" minlength="6" required>
+                <span class="password-toggle-icon" onclick="togglePasswordVisibility('signupPassword', this)">👁️</span>
+              </div>
+            </div>
+
+            <div style="margin-bottom:1.5rem;">
+              <label style="display:block;font-weight:600;font-size:0.85rem;margin-bottom:0.3rem;" for="signupConfirmPassword">Confirm Password</label>
+              <div class="password-input-group">
+                <input type="password" id="signupConfirmPassword" class="form-control" placeholder="Re-enter password" minlength="6" required>
+                <span class="password-toggle-icon" onclick="togglePasswordVisibility('signupConfirmPassword', this)">👁️</span>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" id="signupStep1Btn" style="width:100%;padding:0.8rem;font-size:1rem;">📩 Send Email Verification OTP</button>
+          </form>
+        </div>
+
+        <!-- STEP 2: OTP VERIFICATION -->
+        <div id="signupStep2" class="hidden">
+          <form onsubmit="handleVerifySignupOtp(event)">
+            <div style="text-align:center;margin-bottom:1.5rem;">
+              <div style="font-size:2.2rem;margin-bottom:0.4rem;">📩</div>
+              <h3 style="font-size:1.3rem;">Check Your Email Inbox</h3>
+              <p style="font-size:0.85rem;color:var(--text-muted);">We sent a 6-digit verification code to <strong id="sentEmailDisplay" style="color:var(--text-main);"></strong></p>
+            </div>
+
+            <div style="margin-bottom:1.5rem;">
+              <label style="display:block;font-weight:600;font-size:0.9rem;margin-bottom:0.4rem;text-align:center;" for="signupOtpCode">6-Digit Verification Code</label>
+              <input type="text" id="signupOtpCode" class="form-control" placeholder="••••••" style="font-size:1.4rem;letter-spacing:6px;text-align:center;font-weight:700;" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary" id="signupStep2Btn" style="width:100%;padding:0.8rem;font-size:1rem;">✅ Verify OTP & Complete Registration</button>
+          </form>
+        </div>
+
+        <div style="text-align:center;margin-top:1.75rem;font-size:0.9rem;color:var(--text-muted);">
+          Already have an account? <a href="login.html" style="font-weight:700;">Log in here</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container"><p>© 2026 Study Mate AI — Account Registration</p></div>
+  </footer>
+
+  <script src="js/theme.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    function togglePasswordVisibility(inputId, icon) {
+      const input = document.getElementById(inputId);
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.textContent = '🙈';
+      } else {
+        input.type = 'password';
+        icon.textContent = '👁️';
+      }
+    }
+
+    async function handleRequestSignupOtp(e) {
+      e.preventDefault();
+      const name = document.getElementById('signupName').value.trim();
+      const email = document.getElementById('signupEmail').value.trim();
+      const password = document.getElementById('signupPassword').value.trim();
+      const confirmPassword = document.getElementById('signupConfirmPassword').value.trim();
+      const submitBtn = document.getElementById('signupStep1Btn');
+
+      if (password !== confirmPassword) {
+        return showToast('Passwords do not match!', 'error');
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '⏳ Sending OTP...';
+
+      const res = await apiFetch('/auth/signup/request-otp', {
+        method: 'POST',
+        body: JSON.stringify({ name, email, password })
+      });
+
+      if (res.success) {
+        showToast('Verification OTP sent to your email!', 'success');
+        document.getElementById('sentEmailDisplay').textContent = email;
+        document.getElementById('signupStep1').classList.add('hidden');
+        document.getElementById('signupStep2').classList.remove('hidden');
+      } else {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '📩 Send Email Verification OTP';
+        showToast(res.message || 'Error requesting OTP', 'error');
+      }
+    }
+
+    async function handleVerifySignupOtp(e) {
+      e.preventDefault();
+      const email = document.getElementById('signupEmail').value.trim();
+      const otpCode = document.getElementById('signupOtpCode').value.trim();
+      const submitBtn = document.getElementById('signupStep2Btn');
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '⏳ Verifying OTP...';
+
+      const res = await apiFetch('/auth/signup/verify-otp', {
+        method: 'POST',
+        body: JSON.stringify({ email, otpCode })
+      });
+
+      if (res.success) {
+        localStorage.setItem('studymate_token', res.token);
+        if (res.user) {
+          localStorage.setItem('studymate_user_cache', JSON.stringify(res.user));
+        }
+        showToast('Account verified & created successfully!', 'success');
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 800);
+      } else {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '✅ Verify OTP & Complete Registration';
+        showToast(res.message || 'Verification error', 'error');
+      }
+    }
+  </script>
+</body>
+</html>

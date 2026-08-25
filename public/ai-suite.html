@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Learning Suite - Study Mate AI</title>
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link rel="shortcut icon" href="assets/favicon.ico">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <!-- Mozilla PDF.js for Client-Side PDF Text Extraction -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <!-- Mammoth.js for Client-Side DOCX Word Document Text Extraction -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+  <!-- Tesseract.js for Client-Side Image & Handwritten Note OCR Text Extraction -->
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+</head>
+<body>
+
+  <!-- SITE HEADER -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="brand-logo">
+        <img src="assets/logo.png" alt="Study Mate AI Logo" style="width:40px;height:40px;border-radius:var(--radius-md);object-fit:cover;transform:scale(1.15);box-shadow:0 3px 12px rgba(16,185,129,0.3);">
+        <span>Study Mate <span style="color:var(--primary);">AI</span></span>
+      </a>
+
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="index.html">🏠 Dashboard</a></li>
+        <li class="nav-item"><a href="ai-suite.html" class="active">🤖 AI Suite</a></li>
+        <li class="nav-item"><a href="practice.html">🎴 Practice Tools</a></li>
+        <li class="nav-item"><a href="planner.html">🗓️ Smart Planner</a></li>
+        <li class="nav-item"><a href="knowledge.html">📚 Knowledge</a></li>
+        <li class="nav-item"><a href="analytics.html">📊 Analytics</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="theme-toggle-btn" onclick="toggleTheme()" title="Toggle Light/Dark Theme">🌙</button>
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()" title="Toggle Menu">☰</button>
+        <a href="settings.html" class="user-chip"><div class="user-avatar">AJ</div><span id="navUserName">Alex</span></a>
+      </div>
+    </div>
+  </header>
+
+  <!-- FLOATING SUB-NAVBAR QUICK FEATURE BAR -->
+  <nav class="sub-navbar">
+    <div class="container sub-nav-wrapper">
+      <span style="font-size:0.8rem;font-weight:700;color:var(--text-muted);margin-right:0.4rem;">QUICK FEATURES:</span>
+      <a href="#all" class="sub-nav-item">✨ Show All</a>
+      <a href="#chat" class="sub-nav-item">🤖 AI Tutor Chat</a>
+      <a href="#pdf" class="sub-nav-item">📄 PDF & DOCX Analyzer</a>
+      <a href="#ocr" class="sub-nav-item">📸 Image OCR Scanner</a>
+      <a href="#viva" class="sub-nav-item">🎤 AI Viva Prep</a>
+      <a href="#exam-prep" class="sub-nav-item">🎓 Exam Prep Mode</a>
+      <a href="#syllabus" class="sub-nav-item">📖 Syllabus Analyzer</a>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION WITH GRAPHICS -->
+  <section class="hero-banner" style="padding:1.75rem 0;">
+    <div class="container hero-grid">
+      <div>
+        <h1 class="hero-title" style="font-size:2rem;">🤖 Study Mate AI <span>Academic Learning Suite</span></h1>
+        <p class="hero-subtitle">Interactive AI study tools powered by Study Mate AI logic: chat with an AI tutor, analyze PDFs & DOCX files, scan handwritten notes with OCR, simulate viva exams, and analyze course syllabus structure.</p>
+      </div>
+      <div class="hero-graphics-frame" style="max-height:280px;display:flex;align-items:center;justify-content:center;background:var(--bg-surface-elevated);border-radius:var(--radius-lg);overflow:hidden;">
+        <img src="assets/suite_hero.jpg" alt="AI Suite Graphics" class="hero-graphics-img" style="width:100%;height:100%;max-height:280px;object-fit:contain;padding:0.4rem;">
+      </div>
+    </div>
+  </section>
+
+  <!-- AI SUITE CONTENT -->
+  <main class="container" style="padding-top:2rem;padding-bottom:3rem;">
+
+    <!-- 1. AI STUDY ASSISTANT & CHAT TUTOR -->
+    <section style="margin-bottom:3rem;" id="chat">
+      <div class="section-header">
+        <h2 class="section-title">🤖 AI Study Assistant & Interactive Tutor</h2>
+        <select class="form-control" id="chatSubjectSelect" style="width:auto;min-width:180px;">
+          <option value="Computer Science">Computer Science</option>
+          <option value="Operating Systems">Operating Systems</option>
+          <option value="Database Systems">Database Systems</option>
+          <option value="Mathematics">Mathematics</option>
+        </select>
+      </div>
+
+      <div class="chat-window">
+        <div class="chat-messages" id="chatMessages">
+          <div class="chat-bubble ai">
+            👋 Hello! I am your <strong>Study Mate AI Tutor</strong>. Ask me any question about your subjects, request step-by-step math solutions, or ask for code explanations!
+          </div>
+        </div>
+        <div class="chat-input-bar">
+          <input type="text" class="form-control" id="chatInput" placeholder="Ask Groq AI Tutor anything... (e.g. Explain QuickSort time complexity step by step)">
+          <button class="btn btn-primary" id="sendChatBtn">Send 🚀</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. PDF & DOCX DOCUMENT ANALYZER -->
+    <section style="margin-bottom:3rem;" id="pdf">
+      <div class="section-header">
+        <h2 class="section-title">📄 PDF & Word DOCX Text Analyzer</h2>
+      </div>
+
+      <div style="background:var(--bg-surface);border:1px solid var(--border-color);border-radius:var(--radius-lg);padding:1.5rem;box-shadow:var(--shadow-sm);">
+        
+        <!-- DROPZONE FILE UPLOADER -->
+        <div class="file-dropzone" id="pdfDropzone" onclick="document.getElementById('pdfFileInput').click()">
+          <input type="file" id="pdfFileInput" accept=".pdf,.docx,.doc,.txt,.md,.json" style="display:none;">
+          <div style="font-size:2.5rem;margin-bottom:0.4rem;">📄</div>
+          <p style="font-weight:700;font-size:1.05rem;margin-bottom:0.25rem;">Click to select a PDF or Word DOCX document from your device</p>
+          <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:0.75rem;">Supports PDF (.pdf), Word (.docx, .doc), Text (.txt), and Markdown (.md)</p>
+          <button type="button" class="btn btn-secondary" style="padding:0.45rem 1rem;font-size:0.85rem;">📁 Browse Files</button>
+        </div>
+
+        <!-- FILE PREVIEW CARD -->
+        <div id="pdfFilePreviewCard" class="hidden" style="margin-top:1rem;padding:0.9rem 1.25rem;background:var(--primary-light);border:1px solid var(--primary-border);border-radius:var(--radius-md);display:flex;justify-content:space-between;align-items:center;">
+          <div style="display:flex;align-items:center;gap:0.75rem;">
+            <span style="font-size:1.6rem;">📄</span>
+            <div>
+              <div id="pdfFileNameDisplay" style="font-weight:700;color:var(--primary);font-size:0.95rem;">document.docx</div>
+              <div id="pdfFileSizeDisplay" style="font-size:0.8rem;color:var(--text-muted);">Extracting text content...</div>
+            </div>
+          </div>
+          <button type="button" class="btn btn-secondary" id="clearPdfFileBtn" style="padding:0.25rem 0.65rem;font-size:0.8rem;">✕ Remove File</button>
+        </div>
+
+        <div style="margin-top:1.25rem;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.4rem;">
+            <label style="font-weight:600;font-size:0.9rem;">Cleaned Document Text Preview</label>
+            <span style="font-size:0.8rem;color:var(--text-muted);" id="extractedCharCount">0 Characters</span>
+          </div>
+          <textarea class="form-control" id="pdfTextInput" rows="5" placeholder="Extracted readable text from your PDF or Word document will automatically appear here..."></textarea>
+        </div>
+
+        <button class="btn btn-primary" id="analyzePdfBtn" style="margin-top:1.25rem;width:100%;padding:0.8rem;font-size:1rem;">✨ Analyze Document & Generate AI Breakdown</button>
+        
+        <!-- ANALYSIS SUMMARY & FOLLOW-UP Q&A CONTAINER -->
+        <div id="pdfResultContainer" class="hidden" style="margin-top:1.5rem;">
+          <div id="pdfResultBox"></div>
+
+          <!-- INTERACTIVE FOLLOW-UP QUESTIONS CONTAINER -->
+          <div style="margin-top:1.5rem;padding:1.5rem;background:var(--bg-surface-elevated);border:1px solid var(--border-color);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);">
+            <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem;">
+              <div style="font-size:1.6rem;">💬</div>
+              <div>
+                <h3 style="font-size:1.15rem;color:var(--primary);margin-bottom:0.1rem;">Ask Follow-Up Questions About This Document</h3>
+                <p style="font-size:0.85rem;color:var(--text-muted);">Ask Groq AI specific questions, request simpler explanations, or ask for extra practice questions based on this document.</p>
+              </div>
+            </div>
+
+            <!-- Follow-up message chat stream -->
+            <div id="pdfFollowupMessages" style="max-height:350px;overflow-y:auto;display:flex;flex-direction:column;gap:0.75rem;margin-bottom:1rem;padding:1rem;background:var(--bg-surface);border:1px solid var(--border-color);border-radius:var(--radius-md);">
+              <div style="font-size:0.85rem;color:var(--text-muted);font-style:italic;">💡 Try asking: "Can you explain key concept #1 in simpler words?" or "Generate 3 more practice questions on this topic"</div>
+            </div>
+
+            <div style="display:flex;gap:0.75rem;">
+              <input type="text" class="form-control" id="pdfFollowupInput" placeholder="Ask a follow-up question about this document...">
+              <button class="btn btn-primary" id="sendPdfFollowupBtn" style="padding:0.65rem 1.4rem;">Ask 🚀</button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 3. AI IMAGE OCR SCANNER WITH TESSERACT.JS OCR EXTRACTION -->
+    <section style="margin-bottom:3rem;" id="ocr">
+      <div class="section-header">
+        <h2 class="section-title">📸 AI Image & Handwritten Note OCR Scanner</h2>
+      </div>
+
+      <div style="background:var(--bg-surface);border:1px solid var(--border-color);border-radius:var(--radius-lg);padding:1.5rem;box-shadow:var(--shadow-sm);">
+        
+        <!-- DROPZONE IMAGE UPLOADER -->
+        <div class="file-dropzone" id="imageDropzone">
+          <input type="file" id="imageFileInput" accept="image/*" style="display:none;">
+          <div style="font-size:2.5rem;margin-bottom:0.4rem;">📸</div>
+          <p style="font-weight:700;font-size:1.05rem;margin-bottom:0.25rem;">Select an image or photo of your handwritten notes / whiteboard</p>
+          <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:0.75rem;">Supports JPG, PNG, WEBP, and camera notes</p>
+          <div style="display:flex;gap:0.75rem;justify-content:center;">
+            <button type="button" class="btn btn-primary" onclick="document.getElementById('imageFileInput').click()" style="padding:0.45rem 1.1rem;font-size:0.85rem;">📷 Choose Photo / Image</button>
+            <button type="button" class="btn btn-secondary" id="sampleScanBtn" style="padding:0.45rem 1.1rem;font-size:0.85rem;">🖼️ Load Demo Note Scan</button>
+          </div>
+        </div>
+
+        <!-- IMAGE PREVIEW CONTAINER -->
+        <div id="imagePreviewCard" class="hidden" style="margin-top:1rem;padding:1rem;background:var(--bg-surface-elevated);border:1px solid var(--border-color);border-radius:var(--radius-md);text-align:center;">
+          <img id="imagePreviewImg" style="max-width:100%;max-height:260px;border-radius:var(--radius-md);object-fit:contain;margin-bottom:0.75rem;box-shadow:var(--shadow-sm);" alt="Scan Preview">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span id="imageFileNameDisplay" style="font-size:0.85rem;font-weight:600;color:var(--text-muted);">note_scan.jpg</span>
+            <button type="button" class="btn btn-secondary" id="clearImageFileBtn" style="padding:0.2rem 0.6rem;font-size:0.8rem;">✕ Remove Image</button>
+          </div>
+        </div>
+
+        <div style="margin-top:1.25rem;">
+          <label style="display:block;font-weight:600;font-size:0.9rem;margin-bottom:0.4rem;">OCR Extracted Text Preview (Editable)</label>
+          <textarea class="form-control" id="imageOcrText" rows="4" placeholder="Extracted text from image OCR will automatically appear here..."></textarea>
+        </div>
+
+        <button class="btn btn-primary" id="scanImageBtn" style="margin-top:1.25rem;width:100%;padding:0.8rem;font-size:1rem;">📸 Process Note Scan with Groq AI</button>
+        <div id="imageScanResult" style="margin-top:1.5rem;"></div>
+      </div>
+    </section>
+
+    <!-- 4. AI VIVA PREPARATION WITH TOPIC SELECTION -->
+    <section style="margin-bottom:3rem;" id="viva">
+      <div class="section-header">
+        <h2 class="section-title">🎤 AI Viva Examination Prep Simulator</h2>
+      </div>
+
+      <div style="background:var(--bg-surface);border:1px solid var(--border-color);border-radius:var(--radius-lg);padding:1.5rem;box-shadow:var(--shadow-sm);">
+        
+        <!-- TOPIC INPUT BAR -->
+        <div class="form-grid-viva" style="margin-bottom:1.25rem;">
+          <div>
+            <label style="display:block;font-weight:600;font-size:0.85rem;margin-bottom:0.3rem;">Enter Viva Subject / Topic</label>
+            <input type="text" class="form-control" id="vivaTopicInput" value="Database Management Systems" placeholder="e.g. Operating Systems, Computer Networks, Machine Learning">
+          </div>
+          <div>
+            <label style="display:block;font-weight:600;font-size:0.85rem;margin-bottom:0.3rem;">Preset Subjects</label>
+            <select class="form-control" id="vivaPresetSelect" onchange="document.getElementById('vivaTopicInput').value=this.value">
+              <option value="Database Management Systems">Database Systems</option>
+              <option value="Operating Systems Process Scheduling">Operating Systems</option>
+              <option value="Computer Networks & Protocols">Computer Networks</option>
+              <option value="Data Structures & Algorithms">Data Structures & Algorithms</option>
+              <option value="Software Engineering & Design Patterns">Software Engineering</option>
+            </select>
+          </div>
+          <div style="align-self:flex-end;">
+            <button class="btn btn-primary" id="newVivaQuestionBtn" style="padding:0.75rem 1.1rem;font-size:0.9rem;">🎲 Generate Viva Question</button>
+          </div>
+        </div>
+
+        <!-- EXAMINER QUESTION BOX -->
+        <div style="padding:1.25rem;background:var(--primary-light);border:1px solid var(--primary-border);border-radius:var(--radius-md);margin-bottom:1.25rem;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.4rem;">
+            <div style="font-size:0.8rem;font-weight:700;color:var(--primary);text-transform:uppercase;">Examiner Question</div>
+            <span id="vivaTopicBadge" style="font-size:0.8rem;font-weight:700;color:var(--text-muted);">Topic: Database Management Systems</span>
+          </div>
+          <div style="font-size:1.15rem;font-weight:600;line-height:1.4;" id="vivaQuestionText">"Explain BCNF (Boyce-Codd Normal Form) and how it differs from 3NF."</div>
+        </div>
+
+        <textarea class="form-control" id="vivaAnswerInput" rows="3" style="margin-bottom:1rem;" placeholder="Type your oral answer as if speaking directly to the university professor..."></textarea>
+        <button class="btn btn-primary" id="evaluateVivaBtn" style="width:100%;padding:0.8rem;font-size:1rem;">🎤 Evaluate Viva Answer & Get Score</button>
+        <div id="vivaResultBox" style="margin-top:1.5rem;"></div>
+      </div>
+    </section>
+
+    <!-- 5. EXAM PREP MODE -->
+    <section style="margin-bottom:3rem;" id="exam-prep">
+      <div class="section-header">
+        <h2 class="section-title">🎓 Exam Preparation Strategy Generator</h2>
+      </div>
+
+      <div style="background:var(--bg-surface);border:1px solid var(--border-color);border-radius:var(--radius-lg);padding:1.5rem;box-shadow:var(--shadow-sm);">
+        <div class="form-grid-2" style="margin-bottom:1rem;">
+          <div>
+            <label style="display:block;font-weight:600;font-size:0.85rem;margin-bottom:0.3rem;">Subject Name</label>
+            <input type="text" class="form-control" id="examSubjectInput" value="Operating Systems">
+          </div>
+          <div>
+            <label style="display:block;font-weight:600;font-size:0.85rem;margin-bottom:0.3rem;">Target Exam Date</label>
+            <input type="date" class="form-control" id="examTargetDate" value="2026-09-05">
+          </div>
+        </div>
+        <button class="btn btn-primary" id="generateExamPrepBtn" style="width:100%;padding:0.75rem;">⚡ Generate High-Yield Cheat Sheet & Exam Strategy</button>
+        <div id="examPrepResultBox" style="margin-top:1.5rem;"></div>
+      </div>
+    </section>
+
+    <!-- 6. SYLLABUS ANALYZER WITH PDF / DOCX FILE UPLOADER -->
+    <section style="margin-bottom:3rem;" id="syllabus">
+      <div class="section-header">
+        <h2 class="section-title">📖 Course Syllabus Analyzer</h2>
+      </div>
+
+      <div style="background:var(--bg-surface);border:1px solid var(--border-color);border-radius:var(--radius-lg);padding:1.5rem;box-shadow:var(--shadow-sm);">
+        <input type="text" class="form-control" id="syllabusCourseInput" value="Database Management Systems" style="margin-bottom:1.25rem;" placeholder="Course Name (e.g. Database Management Systems)">
+        
+        <!-- SYLLABUS FILE DROPZONE -->
+        <div class="file-dropzone" id="syllabusDropzone" onclick="document.getElementById('syllabusFileInput').click()">
+          <input type="file" id="syllabusFileInput" accept=".pdf,.docx,.doc,.txt,.md" style="display:none;">
+          <div style="font-size:2.2rem;margin-bottom:0.3rem;">📖</div>
+          <p style="font-weight:700;font-size:1rem;margin-bottom:0.25rem;">Click to upload a Syllabus Document (PDF / DOCX)</p>
+          <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0.6rem;">Supports PDF (.pdf), Word (.docx), and Text (.txt) syllabus files</p>
+          <button type="button" class="btn btn-secondary" style="padding:0.4rem 0.9rem;font-size:0.85rem;">📁 Browse Syllabus File</button>
+        </div>
+
+        <!-- SYLLABUS FILE PREVIEW CARD -->
+        <div id="syllabusFilePreviewCard" class="hidden" style="margin-top:1rem;padding:0.8rem 1rem;background:var(--primary-light);border:1px solid var(--primary-border);border-radius:var(--radius-md);display:flex;justify-content:space-between;align-items:center;">
+          <div style="display:flex;align-items:center;gap:0.75rem;">
+            <span style="font-size:1.4rem;">📖</span>
+            <div>
+              <div id="syllabusFileNameDisplay" style="font-weight:700;color:var(--primary);font-size:0.9rem;">syllabus.docx</div>
+              <div id="syllabusFileSizeDisplay" style="font-size:0.8rem;color:var(--text-muted);">Extracting text content...</div>
+            </div>
+          </div>
+          <button type="button" class="btn btn-secondary" id="clearSyllabusFileBtn" style="padding:0.2rem 0.6rem;font-size:0.8rem;">✕ Remove</button>
+        </div>
+
+        <div style="margin-top:1.25rem;">
+          <label style="display:block;font-weight:600;font-size:0.9rem;margin-bottom:0.4rem;">Syllabus Content (Extracted or Paste Manually)</label>
+          <textarea class="form-control" id="syllabusInputText" rows="4" placeholder="Extracted text from syllabus file or raw syllabus text will appear here..."></textarea>
+        </div>
+
+        <button class="btn btn-primary" id="analyzeSyllabusBtn" style="margin-top:1.25rem;width:100%;padding:0.8rem;font-size:1rem;">📖 Analyze Syllabus Structure with Study Mate AI</button>
+        <div id="syllabusResultBox" style="margin-top:1.5rem;"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container"><p>© 2026 Study Mate AI — AI Suite</p></div>
+  </footer>
+
+  <script src="js/theme.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/ai-suite.js"></script>
+</body>
+</html>

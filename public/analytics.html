@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Progress & Analytics - Study Mate AI</title>
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link rel="shortcut icon" href="assets/favicon.ico">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+  <!-- SITE HEADER -->
+  <header class="site-header">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="brand-logo">
+        <img src="assets/logo.png" alt="Study Mate AI Logo" style="width:40px;height:40px;border-radius:var(--radius-md);object-fit:cover;transform:scale(1.15);box-shadow:0 3px 12px rgba(16,185,129,0.3);">
+        <span>Study Mate <span style="color:var(--primary);">AI</span></span>
+      </a>
+
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="index.html">🏠 Dashboard</a></li>
+        <li class="nav-item"><a href="ai-suite.html">🤖 AI Suite</a></li>
+        <li class="nav-item"><a href="practice.html">🎴 Practice Tools</a></li>
+        <li class="nav-item"><a href="planner.html">🗓️ Smart Planner</a></li>
+        <li class="nav-item"><a href="knowledge.html">📚 Knowledge</a></li>
+        <li class="nav-item"><a href="analytics.html" class="active">📊 Analytics</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="theme-toggle-btn" onclick="toggleTheme()" title="Toggle Light/Dark Theme">🌙</button>
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()" title="Toggle Menu">☰</button>
+        <a href="settings.html" class="user-chip"><div class="user-avatar">AJ</div><span id="navUserName">Alex</span></a>
+      </div>
+    </div>
+  </header>
+
+  <!-- FLOATING SUB-NAVBAR QUICK ANALYTICS BAR -->
+  <nav class="sub-navbar">
+    <div class="container sub-nav-wrapper">
+      <span style="font-size:0.8rem;font-weight:700;color:var(--text-muted);margin-right:0.4rem;">QUICK ANALYTICS:</span>
+      <a href="#all" class="sub-nav-item">✨ Show All</a>
+      <a href="#stats" class="sub-nav-item">📊 Study Stats Overview</a>
+      <a href="#badges" class="sub-nav-item">🏆 Achievement Badges</a>
+      <a href="#recommendations" class="sub-nav-item">🧠 AI Daily Recommendations</a>
+    </div>
+  </nav>
+
+  <main class="container" style="padding-top:2.5rem;padding-bottom:3rem;">
+
+    <!-- 1. STATS OVERVIEW -->
+    <section style="margin-bottom:3rem;" id="stats">
+      <div class="section-header">
+        <h2 class="section-title">📊 Study Analytics & Gamification Progress</h2>
+      </div>
+
+      <div class="stats-strip">
+        <div class="stat-box">
+          <div class="stat-icon streak-flame">🔥</div>
+          <div>
+            <div class="stat-number" id="analyticsStreakDisplay" style="color:var(--accent-gold);">5</div>
+            <div class="stat-label">Active Day Streak</div>
+          </div>
+        </div>
+
+        <div class="stat-box">
+          <div class="stat-icon">🎓</div>
+          <div>
+            <div class="stat-number" id="analyticsLevelDisplay" style="color:var(--primary);">Level 3</div>
+            <div class="stat-label" id="analyticsExpDisplay">1250 EXP</div>
+          </div>
+        </div>
+
+        <div class="stat-box">
+          <div class="stat-icon">🎴</div>
+          <div>
+            <div class="stat-number" id="analyticsCardsMastered">1 / 2</div>
+            <div class="stat-label">Mastered Flashcards</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. GAMIFICATION BADGES CATALOG -->
+    <section style="margin-bottom:3.5rem;" id="badges">
+      <div class="section-header">
+        <h2 class="section-title">🏆 Achievement Badges Catalog</h2>
+      </div>
+
+      <div class="badge-grid" id="badgesGridContainer">
+        <!-- Loaded via JS -->
+      </div>
+    </section>
+
+    <!-- 3. AI PERSONALIZED RECOMMENDATIONS -->
+    <section style="margin-bottom:3rem;" id="recommendations">
+      <div class="section-header">
+        <h2 class="section-title">🧠 AI Personalized Daily Recommendations</h2>
+      </div>
+      <div style="background:var(--bg-surface);border:1px solid var(--border-color);border-radius:var(--radius-lg);padding:1.5rem;box-shadow:var(--shadow-sm);">
+        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;">
+          <div style="font-size:2.2rem;">💡</div>
+          <div>
+            <h3 style="color:var(--primary);">Recommended Focus for Today</h3>
+            <p style="color:var(--text-muted);font-size:0.9rem;">Based on your quiz performance and upcoming assignment deadlines.</p>
+          </div>
+        </div>
+        <ul style="line-height:1.8;padding-left:1.5rem;">
+          <li>Spend <strong>25 minutes</strong> reviewing <em>Database Normalization (BCNF)</em> flashcards.</li>
+          <li>Take the <strong>Operating Systems Process Scheduling Quiz</strong> to lock in 100 EXP points.</li>
+          <li>Draft the outline for the <em>AI Ethics Paper</em> due on August 28th.</li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container"><p>© 2026 Study Mate AI — Progress & Analytics</p></div>
+  </footer>
+
+  <script src="js/theme.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/analytics.js"></script>
+</body>
+</html>

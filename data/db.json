@@ -1,0 +1,921 @@
+{
+  "users": [
+    {
+      "id": "demo-user-1",
+      "name": "Alex Johnson",
+      "email": "demo@studymate.ai",
+      "passwordHash": "$2a$10$e8w.x7.M19L1h8.Bw5bF1e6P5Z5Q1Y6/X6b.y.7g8h9i0j1k2l3m",
+      "streak": 5,
+      "exp": 1250,
+      "level": 3,
+      "groqApiKey": "",
+      "otp": null,
+      "otpExpires": null
+    },
+    {
+      "id": "user-1787486298011",
+      "name": "Gurudatta",
+      "email": "gurugbhat27@gmail.com",
+      "passwordHash": "$2a$10$SzcqSlDy6p2Ffc0L4DyWD.KIGUtwNMhhHjVolCXG.9KVGluEcj0gi",
+      "streak": 1,
+      "exp": 1500,
+      "level": 4,
+      "groqApiKey": "",
+      "createdAt": "2026-08-23T11:58:18.011Z",
+      "resetOtp": null,
+      "resetOtpExpires": null
+    },
+    {
+      "id": "user-1787509625465",
+      "name": "Gurudatta G Bhat",
+      "email": "gurugbhat127@gmail.com",
+      "passwordHash": "$2a$10$4ICY1lGGveOAPx//TGegTO1WLXh3FtTHkeJ5yfOuXsEPgh5NgfC/a",
+      "streak": 1,
+      "exp": 100,
+      "level": 1
+    },
+    {
+      "id": "user-1787544212825",
+      "name": "prajwal ck",
+      "email": "prajwalck402@gmail.com",
+      "passwordHash": "$2a$10$P4fBkGUyC7MovIz0lS83KelF8MT//5wDMg8hS8A2qW5lxfB96BB6q",
+      "streak": 1,
+      "exp": 100,
+      "level": 1
+    },
+    {
+      "id": "user-1787633564598",
+      "name": "Gurudatta G Bhat",
+      "email": "gurugbhat227@gmail.com",
+      "passwordHash": "$2a$10$qiLVGFO6Jt9WLpdapv6qBeE3T2yH4PMOHLgwvs81qw1cJCUHc79GC",
+      "streak": 1,
+      "exp": 200,
+      "level": 1
+    }
+  ],
+  "notes": [
+    {
+      "id": "note-1787634122007",
+      "userId": "user-1787633564598",
+      "title": "web tech",
+      "subject": "web tech",
+      "content": "Web technology refers to the computer languages, tools, and rules used to build and run websites and web applications on the internet. It includes everything from the pages you see on your screen to the hidden servers that save your information. You can learn more technical developer documentation at MDN Web Docs.Front-End (Client-Side)HTML: Builds the core structure of a web page.CSS: Adds colors, fonts, and visual styles.JavaScript: Powers interactive elements like buttons and pop-ups.Back-End (Server-Side)Web Servers: Process and answer requests from users.Databases: Store user data, passwords, and site content.Languages: Code like Python, PHP, or Node.js that runs on the server.Core Rules and ToolsHTTP: The main rulebook for data transfer between a server and your browser.Web Browsers: Apps like Chrome or Safari used to view websites.If you want to continue, let me know:Do you want to learn how to build a simple webpage?Are you trying to understand front-end vs. back-end coding?GeeksforGeeksWeb Development Technologies - GeeksforGeeksWeb Development Technologies * Web development is the process of creating and maintaining websites and web applications that run o...MDN Web DocsWeb technology for developers - MDN Web Docs - MozillaFormats, codecs, protocols, APIs, and techniques for embedding and streaming video, audio, and image content in Web documents and ...Show all",
+      "tags": [
+        "-"
+      ],
+      "createdAt": "2026-08-25T05:02:02.007Z",
+      "updatedAt": "2026-08-25T05:02:02.007Z"
+    },
+    {
+      "id": "note-1787504020775",
+      "userId": "user-1787486298011",
+      "title": "dbms",
+      "subject": "dbms",
+      "content": "hello its dbms notes",
+      "tags": [
+        "-"
+      ],
+      "createdAt": "2026-08-23T16:53:40.775Z",
+      "updatedAt": "2026-08-23T16:53:40.775Z"
+    },
+    {
+      "id": "note-1",
+      "userId": "demo-user-1",
+      "title": "Data Structures & Algorithms Overview",
+      "subject": "Computer Science",
+      "content": "# Data Structures & Algorithms\n\n- **Arrays**: Fixed size contiguous memory block.\n- **Linked Lists**: Node pointers with O(1) insertion.\n- **Trees & Binary Search Trees**: Balanced searching in O(log N).\n- **Graph Algorithms**: Dijkstra's algorithm for shortest path.",
+      "tags": [
+        "CS",
+        "Algorithms",
+        "Core"
+      ],
+      "createdAt": "2026-08-23T11:23:21.048Z",
+      "updatedAt": "2026-08-23T11:23:21.048Z"
+    },
+    {
+      "id": "note-2",
+      "userId": "demo-user-1",
+      "title": "Operating Systems - Process Scheduling",
+      "subject": "Operating Systems",
+      "content": "# Process Scheduling\n\n- **FCFS**: First-come, first-served (non-preemptive).\n- **SJF**: Shortest Job First.\n- **Round Robin**: Time quantum slices for fair scheduling.\n- **Deadlock Conditions**: Mutual exclusion, Hold & wait, No preemption, Circular wait.",
+      "tags": [
+        "OS",
+        "Processes"
+      ],
+      "createdAt": "2026-08-23T11:23:21.048Z",
+      "updatedAt": "2026-08-23T11:23:21.048Z"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "task-1787634071565",
+      "userId": "user-1787633564598",
+      "title": "web tech",
+      "subject": "web tech ",
+      "type": "todo",
+      "dueDate": "2026-08-28",
+      "priority": "high",
+      "completed": false,
+      "weightage": "",
+      "aiSubtasks": [
+        "Review core definitions for web tech",
+        "Practice sample exercise"
+      ]
+    },
+    {
+      "id": "task-1787509863163",
+      "userId": "demo-user-1",
+      "title": "User A Private Task",
+      "subject": "General",
+      "type": "todo",
+      "dueDate": "2026-08-23",
+      "priority": "medium",
+      "completed": false,
+      "weightage": "",
+      "aiSubtasks": [
+        "Review core definitions for User A Private Task",
+        "Practice sample exercise"
+      ]
+    }
+  ],
+  "timetable": [
+    {
+      "day": "Tuesday",
+      "time": "10:00 - 11:30",
+      "subject": "Machine Learning",
+      "room": "Hall B"
+    },
+    {
+      "day": "Wednesday",
+      "time": "09:00 - 10:30",
+      "subject": "Operating Systems",
+      "room": "Room 104"
+    },
+    {
+      "day": "Thursday",
+      "time": "14:00 - 16:00",
+      "subject": "Web Development Lab",
+      "room": "Lab 5"
+    },
+    {
+      "day": "Monday",
+      "time": "09:00 AM - 10:30 AM",
+      "subject": "Operating Systems",
+      "room": "LH-201"
+    },
+    {
+      "userId": "demo-user-1",
+      "day": "Daily",
+      "time": "6:00 AM - 6:30 AM",
+      "subject": "Wake up + freshen up",
+      "room": "LH-101"
+    },
+    {
+      "userId": "demo-user-1",
+      "day": "Daily",
+      "time": "6:30 AM - 7:00 AM",
+      "subject": "Quick light exercise or stretching",
+      "room": "LH-101"
+    },
+    {
+      "userId": "demo-user-1",
+      "day": "Daily",
+      "time": "7:00 AM - 7:30 AM",
+      "subject": "Breakfast + quick revision of yesterday's topics",
+      "room": "LH-101"
+    },
+    {
+      "userId": "demo-user-1",
+      "day": "Daily",
+      "time": "7:30 AM - 1:30 PM",
+      "subject": "School",
+      "room": "LH-101"
+    },
+    {
+      "userId": "demo-user-1",
+      "day": "Daily",
+      "time": "1:30 PM - 2:00 PM",
+      "subject": "Lunch + rest",
+      "room": "LH-101"
+    },
+    {
+      "userId": "demo-user-1",
+      "day": "Daily",
+      "time": "2:00 PM - 3:30 PM",
+      "subject": "Self-study (Maths or Science - tough topics first)",
+      "room": "LH-101"
+    },
+    {
+      "userId": "demo-user-1",
+      "day": "Daily",
+      "time": "3:30 PM - 4:00 PM",
+      "subject": "Break light snack / walk",
+      "room": "LH-101"
+    },
+    {
+      "userId": "demo-user-1",
+      "day": "Daily",
+      "time": "4:00 PM - 6:00 PM",
+      "subject": "TUITION",
+      "room": "LH-101"
+    },
+    {
+      "userId": "demo-user-1",
+      "day": "Daily",
+      "time": "6:00 PM - 6:30 PM",
+      "subject": "Rest + relax",
+      "room": "LH-101"
+    },
+    {
+      "userId": "demo-user-1",
+      "day": "Daily",
+      "time": "6:30 PM - 7:30 PM",
+      "subject": "Revise tuition notes same day",
+      "room": "LH-101"
+    },
+    {
+      "userId": "demo-user-1",
+      "day": "Daily",
+      "time": "7:30 PM - 8:00 PM",
+      "subject": "Dinner",
+      "room": "LH-101"
+    },
+    {
+      "userId": "demo-user-1",
+      "day": "Daily",
+      "time": "8:00 PM - 9:00 PM",
+      "subject": "Practice questions alternate (Maths/Science + SST/English)",
+      "room": "LH-101"
+    },
+    {
+      "userId": "demo-user-1",
+      "day": "Daily",
+      "time": "9:00 PM - 9:30 PM",
+      "subject": "Light revision",
+      "room": "LH-101"
+    },
+    {
+      "id": "tt-1787509982737-7u8w",
+      "userId": "user-1787486298011",
+      "day": "Monday",
+      "time": "6:30AM",
+      "subject": "600 AM~  | Wake up + freshen up",
+      "room": "LH-103"
+    },
+    {
+      "id": "tt-1787509982737-4vh3",
+      "userId": "user-1787486298011",
+      "day": "Monday",
+      "time": "6:30 AM - 7:00 AM",
+      "subject": "| Quick ight exercise or stretching",
+      "room": "LH-104"
+    },
+    {
+      "id": "tt-1787509982737-q87a",
+      "userId": "user-1787486298011",
+      "day": "Monday",
+      "time": "7:30AM",
+      "subject": "T:00AM- | of vesterday's topics",
+      "room": "LH-106"
+    },
+    {
+      "id": "tt-1787509982737-24ef",
+      "userId": "user-1787486298011",
+      "day": "Monday",
+      "time": "1:30PM",
+      "subject": "730 AM- scHooL",
+      "room": "LH-107"
+    },
+    {
+      "id": "tt-1787509982737-6ygu",
+      "userId": "user-1787486298011",
+      "day": "Monday",
+      "time": "2:00PM",
+      "subject": "130PM- | Lunch + rest",
+      "room": "LH-109"
+    },
+    {
+      "id": "tt-1787509982737-zvoe",
+      "userId": "user-1787486298011",
+      "day": "Monday",
+      "time": "3:30 PM",
+      "subject": "- 400 PM | Break light snack / walk",
+      "room": "LH-102"
+    },
+    {
+      "id": "tt-1787509982737-u8r8",
+      "userId": "user-1787486298011",
+      "day": "Monday",
+      "time": "6:00 PM",
+      "subject": "400 PM- TUITION",
+      "room": "LH-103"
+    },
+    {
+      "id": "tt-1787509982737-fykj",
+      "userId": "user-1787486298011",
+      "day": "Monday",
+      "time": "6:30PM",
+      "subject": "600PM- | Rest + relax",
+      "room": "LH-105"
+    },
+    {
+      "id": "tt-1787509982737-83j6",
+      "userId": "user-1787486298011",
+      "day": "Monday",
+      "time": "7:30 PM- 8:00PM",
+      "subject": "| Dinner",
+      "room": "LH-108"
+    },
+    {
+      "id": "tt-1787509982737-fywr",
+      "userId": "user-1787486298011",
+      "day": "Monday",
+      "time": "9:00PM -9:30 PM",
+      "subject": "| Light revision",
+      "room": "LH-101"
+    },
+    {
+      "id": "tt-1787634036351-deav",
+      "userId": "user-1787633564598",
+      "day": "Monday",
+      "time": "6:30AM",
+      "subject": "600 AM~  | Wake up + freshen up",
+      "room": "LH-103"
+    },
+    {
+      "id": "tt-1787634036351-ryri",
+      "userId": "user-1787633564598",
+      "day": "Monday",
+      "time": "6:30 AM - 7:00 AM",
+      "subject": "| Quick ight exercise or stretching",
+      "room": "LH-104"
+    },
+    {
+      "id": "tt-1787634036351-emp7",
+      "userId": "user-1787633564598",
+      "day": "Monday",
+      "time": "7:30AM",
+      "subject": "T:00AM- | of vesterday's topics",
+      "room": "LH-106"
+    },
+    {
+      "id": "tt-1787634036351-6771",
+      "userId": "user-1787633564598",
+      "day": "Monday",
+      "time": "1:30PM",
+      "subject": "730 AM- scHooL",
+      "room": "LH-107"
+    },
+    {
+      "id": "tt-1787634036351-325k",
+      "userId": "user-1787633564598",
+      "day": "Monday",
+      "time": "2:00PM",
+      "subject": "130PM- | Lunch + rest",
+      "room": "LH-109"
+    },
+    {
+      "id": "tt-1787634036351-waa8",
+      "userId": "user-1787633564598",
+      "day": "Monday",
+      "time": "3:30 PM",
+      "subject": "- 400 PM | Break light snack / walk",
+      "room": "LH-102"
+    },
+    {
+      "id": "tt-1787634036351-hdxx",
+      "userId": "user-1787633564598",
+      "day": "Monday",
+      "time": "6:00 PM",
+      "subject": "400 PM- TUITION",
+      "room": "LH-103"
+    },
+    {
+      "id": "tt-1787634036351-yg8t",
+      "userId": "user-1787633564598",
+      "day": "Monday",
+      "time": "6:30PM",
+      "subject": "600PM- | Rest + relax",
+      "room": "LH-105"
+    },
+    {
+      "id": "tt-1787634036351-c3hv",
+      "userId": "user-1787633564598",
+      "day": "Monday",
+      "time": "7:30 PM- 8:00PM",
+      "subject": "| Dinner",
+      "room": "LH-108"
+    },
+    {
+      "id": "tt-1787634036351-ex0l",
+      "userId": "user-1787633564598",
+      "day": "Monday",
+      "time": "9:00PM -9:30 PM",
+      "subject": "| Light revision",
+      "room": "LH-101"
+    }
+  ],
+  "quizzes": [
+    {
+      "id": "quiz-1787633945463",
+      "userId": "user-1787633564598",
+      "title": "AI Quiz: web tech",
+      "subject": "Practice Quiz",
+      "score": 10,
+      "totalQuestions": 3,
+      "date": "2026-08-25"
+    },
+    {
+      "id": "quiz-1787543495176",
+      "userId": "user-1787486298011",
+      "title": "AI Quiz: HUMAN PSYCHOLOGY",
+      "subject": "Practice Quiz",
+      "score": 20,
+      "totalQuestions": 5,
+      "date": "2026-08-24"
+    },
+    {
+      "id": "quiz-1787507603650",
+      "userId": "user-1787486298011",
+      "title": "AI Practice Quiz: Operating Systems Process Scheduling",
+      "subject": "Practice Quiz",
+      "score": 10,
+      "totalQuestions": 3,
+      "date": "2026-08-23"
+    },
+    {
+      "id": "quiz-1787490913190",
+      "userId": "user-1787486298011",
+      "title": "AI Quiz: Web Tech",
+      "subject": "Practice Quiz",
+      "score": 20,
+      "totalQuestions": 5,
+      "date": "2026-08-23"
+    },
+    {
+      "id": "quiz-1787490775568",
+      "userId": "user-1787486298011",
+      "title": "Web Tech Basics Quiz",
+      "subject": "Practice Quiz",
+      "score": 20,
+      "totalQuestions": 5,
+      "date": "2026-08-23"
+    },
+    {
+      "id": "quiz-1787490684324",
+      "userId": "user-1787486298011",
+      "title": "Web Tech Basics Quiz",
+      "subject": "Practice Quiz",
+      "score": 50,
+      "totalQuestions": 5,
+      "date": "2026-08-23"
+    },
+    {
+      "id": "quiz-1787490423037",
+      "userId": "user-1787486298011",
+      "title": "Operating Systems Process Scheduling Quiz",
+      "subject": "Practice Quiz",
+      "score": 20,
+      "totalQuestions": 3,
+      "date": "2026-08-23"
+    },
+    {
+      "id": "quiz-1787490377915",
+      "userId": "user-1787486298011",
+      "title": "Operating Systems Process Scheduling Quiz",
+      "subject": "Practice Quiz",
+      "score": 0,
+      "totalQuestions": 3,
+      "date": "2026-08-23"
+    },
+    {
+      "id": "quiz-1787490313321",
+      "userId": "user-1787486298011",
+      "title": "Operating Systems Process Scheduling Quiz",
+      "subject": "Practice Quiz",
+      "score": 0,
+      "totalQuestions": 3,
+      "date": "2026-08-23"
+    },
+    {
+      "id": "quiz-1",
+      "userId": "demo-user-1",
+      "title": "Quick Check: OS Memory Management",
+      "subject": "Operating Systems",
+      "score": 85,
+      "totalQuestions": 5,
+      "date": "2026-08-22"
+    }
+  ],
+  "flashcards": [
+    {
+      "id": "fc-1",
+      "userId": "demo-user-1",
+      "deck": "Web Technologies",
+      "front": "What does CORS stand for?",
+      "back": "Cross-Origin Resource Sharing. A mechanism that uses HTTP headers to tell browsers to give a web application running at one origin access to selected resources from a different origin.",
+      "mastered": true
+    },
+    {
+      "id": "fc-2",
+      "userId": "demo-user-1",
+      "deck": "Web Technologies",
+      "front": "What is the difference between SQL and NoSQL?",
+      "back": "SQL databases are relational, structured, and use SQL schemas (e.g. PostgreSQL, MySQL). NoSQL databases are non-relational, document-oriented or key-value stores (e.g. MongoDB, Redis).",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787504329289-0",
+      "userId": "user-1787486298011",
+      "deck": "Web Technologies",
+      "front": "What is the primary difference between HTTP GET and POST methods?",
+      "back": "GET retrieves data and appends parameters to the URL (making them visible and cacheable), while POST sends data in the request body (more secure and not cached) and is typically used to create or update resources.",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787504329289-1",
+      "userId": "user-1787486298011",
+      "deck": "Web Technologies",
+      "front": "Define the CSS Box Model.",
+      "back": "A box that wraps around every HTML element, consisting of four layers from inside out: Content, Padding, Border, and Margin.",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787504329289-2",
+      "userId": "user-1787486298011",
+      "deck": "Web Technologies",
+      "front": "How does the JavaScript Event Loop work?",
+      "back": "It continuously monitors the Call Stack and Task Queue. If the Call Stack is empty, it pushes the first callback from the Task Queue onto the Stack to execute, enabling non-blocking asynchronous operations.",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787504329289-3",
+      "userId": "user-1787486298011",
+      "deck": "Web Technologies",
+      "front": "What is CORS (Cross-Origin Resource Sharing)?",
+      "back": "A browser security mechanism that restricts web pages from making requests to a different domain than the one that served the web page, unless the server explicitly allows it via specific headers.",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787504329289-4",
+      "userId": "user-1787486298011",
+      "deck": "Web Technologies",
+      "front": "What is the difference between XSS and CSRF?",
+      "back": "XSS (Cross-Site Scripting) involves injecting malicious scripts into trusted websites. CSRF (Cross-Site Request Forgery) tricks an authenticated user into performing unwanted actions on a site they are logged into.",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787504329289-5",
+      "userId": "user-1787486298011",
+      "deck": "Web Technologies",
+      "front": "Why is Semantic HTML important?",
+      "back": "It improves accessibility for screen readers, enhances SEO by helping search engines understand content structure, and improves code readability and maintainability for developers.",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787504329289-6",
+      "userId": "user-1787486298011",
+      "deck": "Web Technologies",
+      "front": "What is a Closure in JavaScript?",
+      "back": "A function bundled together with references to its surrounding state (lexical environment), allowing an inner function to access variables from its outer function even after the outer function has returned.",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787504329289-7",
+      "userId": "user-1787486298011",
+      "deck": "Web Technologies",
+      "front": "What do HTTP status codes 200, 404, and 500 indicate?",
+      "back": "200 OK (Request succeeded), 404 Not Found (Client error: resource could not be located), 500 Internal Server Error (Server encountered an unexpected condition).",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787504329289-8",
+      "userId": "user-1787486298011",
+      "deck": "Web Technologies",
+      "front": "When should you use CSS Grid versus Flexbox?",
+      "back": "Use Flexbox for one-dimensional layouts (a single row OR a single column). Use Grid for two-dimensional layouts (managing both rows AND columns simultaneously).",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787504329289-9",
+      "userId": "user-1787486298011",
+      "deck": "Web Technologies",
+      "front": "What is the purpose of `async/await` in JavaScript?",
+      "back": "It provides a cleaner syntax for handling Promises, allowing asynchronous code to be written and read in a synchronous style without blocking the main execution thread.",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787508455202-0",
+      "userId": "user-1787486298011",
+      "deck": "Web Technologies",
+      "front": "What is the core definition of Web Technologies?",
+      "back": "Web Technologies is a key academic framework used to structure and evaluate core systems efficiently.",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787508455202-1",
+      "userId": "user-1787486298011",
+      "deck": "Web Technologies",
+      "front": "What is the primary rule to remember for Web Technologies?",
+      "back": "Always verify base conditions, maintain modular separation, and optimize performance.",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787508455203-2",
+      "userId": "user-1787486298011",
+      "deck": "Web Technologies",
+      "front": "State one real-world application of Web Technologies.",
+      "back": "Used extensively in system architecture, algorithm design, and technical problem solving.",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787508455203-3",
+      "userId": "user-1787486298011",
+      "deck": "Web Technologies",
+      "front": "What is the time complexity of searching in a balanced BST?",
+      "back": "O(log N) operations.",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787508455203-4",
+      "userId": "user-1787486298011",
+      "deck": "Web Technologies",
+      "front": "What is the difference between synchronous and asynchronous operations?",
+      "back": "Synchronous blocks execution until complete, while asynchronous runs non-blocking tasks.",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787508478885-0",
+      "userId": "user-1787486298011",
+      "deck": "Web Technologies",
+      "front": "What is the core definition of Web Technologies?",
+      "back": "Web Technologies is a key academic framework used to structure and evaluate core systems efficiently.",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787508478885-1",
+      "userId": "user-1787486298011",
+      "deck": "Web Technologies",
+      "front": "What is the primary rule to remember for Web Technologies?",
+      "back": "Always verify base conditions, maintain modular separation, and optimize performance.",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787508478885-2",
+      "userId": "user-1787486298011",
+      "deck": "Web Technologies",
+      "front": "State one real-world application of Web Technologies.",
+      "back": "Used extensively in system architecture, algorithm design, and technical problem solving.",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787508478885-3",
+      "userId": "user-1787486298011",
+      "deck": "Web Technologies",
+      "front": "What is the time complexity of searching in a balanced BST?",
+      "back": "O(log N) operations.",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787508478885-4",
+      "userId": "user-1787486298011",
+      "deck": "Web Technologies",
+      "front": "What is the difference between synchronous and asynchronous operations?",
+      "back": "Synchronous blocks execution until complete, while asynchronous runs non-blocking tasks.",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787509864182-0",
+      "userId": "demo-user-1",
+      "deck": "User B Physics Deck",
+      "front": "What is the principle of conservation of energy?",
+      "back": "The total mechanical energy (sum of kinetic and potential energy) of an isolated system remains constant over time, provided no external work is done on the system.",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787509864182-1",
+      "userId": "demo-user-1",
+      "deck": "User B Physics Deck",
+      "front": "State Newton's second law of motion and its mathematical form.",
+      "back": "Newton's second law states that the net force acting on an object is equal to the mass of the object multiplied by its acceleration. Mathematically, \\(\\vec{F}_{\\text{net}} = m\\vec{a}\\).",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787510055387-0",
+      "userId": "user-1787486298011",
+      "deck": "Web Technologies",
+      "front": "What is the difference between HTTP and HTTPS?",
+      "back": "HTTP is an unsecured protocol that transmits data in plain text, while HTTPS adds TLS/SSL encryption to secure data transmission and authenticate the server.",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787510055388-1",
+      "userId": "user-1787486298011",
+      "deck": "Web Technologies",
+      "front": "Explain the role of the DOM in web development.",
+      "back": "The Document Object Model (DOM) represents the page as a tree of objects; scripts manipulate the DOM to dynamically change content, structure, and styles.",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787510055388-2",
+      "userId": "user-1787486298011",
+      "deck": "Web Technologies",
+      "front": "What is CORS and why is it important?",
+      "back": "Cross-Origin Resource Sharing (CORS) is a security mechanism that allows or restricts web pages from making requests to a different domain; it prevents malicious cross-site requests.",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787510055388-3",
+      "userId": "user-1787486298011",
+      "deck": "Web Technologies",
+      "front": "Describe the purpose of the Fetch API.",
+      "back": "The Fetch API provides a modern, promise-based interface for making network requests, replacing older XMLHttpRequest with cleaner syntax and better error handling.",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787510055388-4",
+      "userId": "user-1787486298011",
+      "deck": "Web Technologies",
+      "front": "What are WebSockets and when would you use them?",
+      "back": "WebSockets enable full-duplex, low-latency communication between client and server over a single TCP connection; used for real-time features like chat, live updates, or multiplayer games.",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787543445747-0",
+      "userId": "user-1787486298011",
+      "deck": "DBMS",
+      "front": "What is a DBMS?",
+      "back": "A Database Management System (DBMS) is software that enables creation, management, and manipulation of databases, providing data storage, retrieval, and security.",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787543445747-1",
+      "userId": "user-1787486298011",
+      "deck": "DBMS",
+      "front": "Explain the ACID properties.",
+      "back": "ACID stands for Atomicity, Consistency, Isolation, Durability – ensuring reliable transaction processing: all-or-nothing, data integrity, concurrent isolation, and permanence.",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787543445747-2",
+      "userId": "user-1787486298011",
+      "deck": "DBMS",
+      "front": "What is normalization?",
+      "back": "Normalization is the process of organizing database tables to reduce redundancy and improve data integrity, typically through normal forms (1NF, 2NF, 3NF, BCNF).",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787543445747-3",
+      "userId": "user-1787486298011",
+      "deck": "DBMS",
+      "front": "Define primary key and foreign key.",
+      "back": "A primary key uniquely identifies each record in a table; a foreign key is a field that creates a link between two tables by referencing a primary key.",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787543445747-4",
+      "userId": "user-1787486298011",
+      "deck": "DBMS",
+      "front": "What is an index and why use it?",
+      "back": "An index is a data structure that speeds up data retrieval by allowing the DBMS to locate rows quickly, at the cost of additional storage and slower writes.",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787543445747-5",
+      "userId": "user-1787486298011",
+      "deck": "DBMS",
+      "front": "Describe the difference between OLTP and OLAP.",
+      "back": "OLTP (Online Transaction Processing) handles day‑to‑day transactional workloads; OLAP (Online Analytical Processing) supports complex queries for data analysis and reporting.",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787543445747-6",
+      "userId": "user-1787486298011",
+      "deck": "DBMS",
+      "front": "What is a stored procedure?",
+      "back": "A stored procedure is a precompiled set of SQL statements stored in the database, used to encapsulate logic and improve performance and security.",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787543445747-7",
+      "userId": "user-1787486298011",
+      "deck": "DBMS",
+      "front": "Explain referential integrity.",
+      "back": "Referential integrity ensures that relationships between tables remain consistent, preventing orphaned records by enforcing foreign key constraints.",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787543445747-8",
+      "userId": "user-1787486298011",
+      "deck": "DBMS",
+      "front": "What is a transaction log?",
+      "back": "A transaction log records all changes made to the database, enabling recovery, rollback, and ensuring durability in case of failures.",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787543445747-9",
+      "userId": "user-1787486298011",
+      "deck": "DBMS",
+      "front": "Define a view and its advantages.",
+      "back": "A view is a virtual table defined by a query; it simplifies complex queries, enhances security by restricting data access, and provides abstraction.",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787633886645-0",
+      "userId": "user-1787633564598",
+      "deck": "Web Technologies",
+      "front": "What is HTTP and its main purpose?",
+      "back": "HTTP (Hypertext Transfer Protocol) is a stateless application-layer protocol used for transmitting hypermedia documents, such as HTML, between clients (usually browsers) and servers. It defines request methods (GET, POST, PUT, DELETE, etc.) and status codes for client-server communication.",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787633886645-1",
+      "userId": "user-1787633564598",
+      "deck": "Web Technologies",
+      "front": "Explain the difference between HTTP and HTTPS.",
+      "back": "HTTPS is HTTP over TLS/SSL, providing encryption, data integrity, and server authentication. It protects data in transit from eavesdropping and tampering, whereas plain HTTP does not.",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787633886645-2",
+      "userId": "user-1787633564598",
+      "deck": "Web Technologies",
+      "front": "What are RESTful APIs and their key constraints?",
+      "back": "REST (Representational State Transfer) is an architectural style for web services that uses stateless, client-server communication, a uniform interface (HTTP verbs, resource URIs), and supports caching, layered system, and code on demand. RESTful APIs expose resources via URLs and manipulate them with standard HTTP methods.",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787633886645-3",
+      "userId": "user-1787633564598",
+      "deck": "Web Technologies",
+      "front": "How do WebSockets differ from HTTP in terms of communication?",
+      "back": "WebSockets establish a persistent, full-duplex TCP connection after an HTTP handshake, allowing real-time, low-latency bidirectional communication. Unlike HTTP, which is request-response, WebSockets enable continuous data flow without repeated handshakes.",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787633886645-4",
+      "userId": "user-1787633564598",
+      "deck": "Web Technologies",
+      "front": "What is CORS and why is it needed?",
+      "back": "Cross-Origin Resource Sharing (CORS) is a security mechanism that allows a server to indicate which origins are permitted to access its resources. It prevents malicious sites from making unauthorized cross-origin requests while enabling legitimate cross-domain interactions.",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787633886645-5",
+      "userId": "user-1787633564598",
+      "deck": "Web Technologies",
+      "front": "Describe JSON Web Tokens (JWT) and their typical use.",
+      "back": "JWT is a compact, URL-safe token format that encodes a JSON payload (claims) signed with a secret or private key. It is used for stateless authentication, allowing clients to prove identity and authorization without server-side session storage.",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787633886645-6",
+      "userId": "user-1787633564598",
+      "deck": "Web Technologies",
+      "front": "What is OAuth 2.0 and its main flow for web apps?",
+      "back": "OAuth 2.0 is an authorization framework that lets third-party applications obtain limited access to user resources on a server. The Authorization Code flow is common for web apps: the client redirects the user to the auth server, receives an authorization code, exchanges it for an access token, and optionally a refresh token.",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787633886645-7",
+      "userId": "user-1787633564598",
+      "deck": "Web Technologies",
+      "front": "Explain Content Security Policy (CSP) and its benefits.",
+      "back": "CSP is a security header that restricts the sources from which a browser can load resources (scripts, styles, images, etc.). It mitigates cross-site scripting (XSS) and data injection attacks by enforcing a whitelist of trusted origins.",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787633886645-8",
+      "userId": "user-1787633564598",
+      "deck": "Web Technologies",
+      "front": "What is the Same-Origin Policy and its implications for web development?",
+      "back": "The Same-Origin Policy restricts scripts on a web page from accessing data from another origin (different protocol, domain, or port). It protects user data but requires mechanisms like CORS or JSONP for legitimate cross-origin requests.",
+      "mastered": false
+    },
+    {
+      "id": "fc-1787633886645-9",
+      "userId": "user-1787633564598",
+      "deck": "Web Technologies",
+      "front": "What are Service Workers and how do they enable offline web experiences?",
+      "back": "Service Workers are background scripts that intercept network requests, allowing developers to cache assets and serve them from the cache when offline. They enable progressive web apps (PWAs) to provide reliable, fast experiences even without network connectivity.",
+      "mastered": false
+    }
+  ],
+  "reminders": [
+    {
+      "id": "rem-1",
+      "userId": "demo-user-1",
+      "title": "DB Exam Prep Session",
+      "time": "Today at 06:00 PM",
+      "active": true
+    },
+    {
+      "id": "rem-2",
+      "userId": "demo-user-1",
+      "title": "Submit Web Dev Assignment",
+      "time": "Tomorrow at 11:59 PM",
+      "active": true
+    }
+  ],
+  "calendar": []
+}
