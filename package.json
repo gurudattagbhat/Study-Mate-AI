@@ -2,7 +2,7 @@
   "name": "study-mate-ai",
   "version": "1.0.0",
   "description": "Comprehensive AI-Powered Study Assistant Web Application",
-  "main": "server.js",
+  "main": "api/index.js",
   "type": "commonjs",
   "scripts": {
     "start": "node server.js",
