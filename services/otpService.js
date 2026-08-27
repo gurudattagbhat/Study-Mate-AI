@@ -3,21 +3,44 @@ const nodemailer = require('nodemailer');
 // In-memory fallback OTP store
 const activeOtps = new Map();
 
-// Configure Nodemailer Gmail Transporter
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: (process.env.EMAIL_USER || '').trim(),
-    pass: (process.env.EMAIL_PASS || '').replace(/\s+/g, '')
+/**
+ * Get Nodemailer Transporter dynamically with current process.env variables
+ */
+function getTransporter() {
+  const user = (process.env.EMAIL_USER || '').trim();
+  const pass = (process.env.EMAIL_PASS || '').replace(/\s+/g, '');
+
+  if (!user || !pass) {
+    console.warn('⚠️ [Nodemailer Warning] EMAIL_USER or EMAIL_PASS is not set in environment variables!');
   }
-});
+
+  return nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: { user, pass }
+  });
+}
 
 /**
  * Send real 6-Digit OTP Email via Gmail SMTP
  */
 async function sendOtpEmail(email, otpCode) {
+  const emailUser = (process.env.EMAIL_USER || '').trim();
+  const emailPass = (process.env.EMAIL_PASS || '').replace(/\s+/g, '');
+
+  if (!emailUser || !emailPass) {
+    console.error('❌ [Nodemailer Error] Cannot send email: EMAIL_USER or EMAIL_PASS environment variables are missing on Vercel.');
+    return { 
+      success: false, 
+      error: 'SMTP credentials missing on Vercel. Please set EMAIL_USER and EMAIL_PASS in Vercel project environment variables.' 
+    };
+  }
+
+  const transporter = getTransporter();
+
   const mailOptions = {
-    from: `"Study Mate AI" <${process.env.EMAIL_USER || 'no-reply@studymate.ai'}>`,
+    from: `"Study Mate AI" <${emailUser}>`,
     to: email,
     subject: `🔐 Your Study Mate AI Verification Code: ${otpCode}`,
     html: `
@@ -29,9 +52,9 @@ async function sendOtpEmail(email, otpCode) {
         </div>
 
         <div style="background-color: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px; padding: 28px; text-align: center; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
-          <h3 style="margin-top: 0; color: #0F172A; font-size: 18px;">Password Recovery OTP Code</h3>
+          <h3 style="margin-top: 0; color: #0F172A; font-size: 18px;">Account Verification OTP Code</h3>
           <p style="color: #475569; font-size: 14px; line-height: 1.5; margin-bottom: 24px;">
-            You requested a password reset for your Study Mate AI account. Use the 6-digit verification code below to complete your request:
+            Use the 6-digit verification code below to complete your Study Mate AI registration or password reset:
           </p>
 
           <div style="background-color: #ECFDF5; border: 2px dashed #059669; border-radius: 10px; padding: 16px; margin: 20px 0; display: inline-block;">

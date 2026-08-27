@@ -6,8 +6,12 @@ const DB_FILE = path.join(__dirname, '../data/db.json');
 
 // Ensure data directory exists for JSON fallback
 const dataDir = path.join(__dirname, '../data');
-if (!fs.existsSync(dataDir)) {
-  fs.mkdirSync(dataDir, { recursive: true });
+try {
+  if (!fs.existsSync(dataDir)) {
+    fs.mkdirSync(dataDir, { recursive: true });
+  }
+} catch (err) {
+  // Directory creation may fail on read-only serverless filesystems
 }
 
 // Initial DB template
@@ -114,24 +118,37 @@ const initialDb = {
   ]
 };
 
-if (!fs.existsSync(DB_FILE)) {
-  fs.writeFileSync(DB_FILE, JSON.stringify(initialDb, null, 2));
+try {
+  if (!fs.existsSync(DB_FILE)) {
+    fs.writeFileSync(DB_FILE, JSON.stringify(initialDb, null, 2));
+  }
+} catch (e) {
+  // Ignore filesystem write error on read-only environments
 }
 
 class JsonStore {
   constructor() {
     this.filePath = DB_FILE;
+    this.memoryCache = null;
   }
   read() {
+    if (this.memoryCache) return this.memoryCache;
     try {
       const raw = fs.readFileSync(this.filePath, 'utf8');
-      return JSON.parse(raw);
+      this.memoryCache = JSON.parse(raw);
+      return this.memoryCache;
     } catch (e) {
-      return initialDb;
+      this.memoryCache = initialDb;
+      return this.memoryCache;
     }
   }
   write(data) {
-    fs.writeFileSync(this.filePath, JSON.stringify(data, null, 2));
+    this.memoryCache = data;
+    try {
+      fs.writeFileSync(this.filePath, JSON.stringify(data, null, 2));
+    } catch (e) {
+      // In read-only serverless environments like Vercel, maintain data in memory
+    }
   }
   get(collectionName) {
     const db = this.read();
@@ -147,23 +164,34 @@ class JsonStore {
 const jsonStore = new JsonStore();
 
 let isMongoConnected = false;
+let connPromise = null;
 
 const connectDB = async () => {
   const mongoUri = process.env.MONGODB_URI;
   if (!mongoUri) {
-    console.log('ℹ️ MONGODB_URI not provided. Operating in high-performance JSON Storage engine mode.');
     return false;
   }
-  try {
-    await mongoose.connect(mongoUri);
+  if (mongoose.connection.readyState >= 1) {
     isMongoConnected = true;
-    console.log('⚡ Connected to MongoDB successfully.');
     return true;
-  } catch (err) {
-    console.warn('⚠️ MongoDB connection failed. Falling back to local JSON database store:', err.message);
-    isMongoConnected = false;
-    return false;
   }
+  if (connPromise) {
+    return connPromise;
+  }
+  connPromise = (async () => {
+    try {
+      await mongoose.connect(mongoUri);
+      isMongoConnected = true;
+      console.log('⚡ Connected to MongoDB successfully.');
+      return true;
+    } catch (err) {
+      console.warn('⚠️ MongoDB connection failed. Falling back to JSON database store:', err.message);
+      isMongoConnected = false;
+      connPromise = null;
+      return false;
+    }
+  })();
+  return connPromise;
 };
 
 module.exports = {
@@ -171,3 +199,4 @@ module.exports = {
   isMongoConnected: () => isMongoConnected,
   jsonStore
 };
+
