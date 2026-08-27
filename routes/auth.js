@@ -34,7 +34,7 @@ const authMiddleware = async (req, res, next) => {
 };
 
 // 1. SIGNUP STEP 1: REQUEST OTP FOR REGISTRATION
-router.post('/signup/request-otp', async (req, res) => {
+router.post(['/signup/request-otp', '/signup/otp'], async (req, res) => {
   try {
     const { name, email, password } = req.body;
     if (!name || !email || !password) {
@@ -254,7 +254,7 @@ router.post('/login', async (req, res) => {
 });
 
 // 4. FORGOT PASSWORD - REQUEST OTP
-router.post('/forgot-password/request-otp', async (req, res) => {
+router.post(['/forgot-password/request-otp', '/forgot-password/otp'], async (req, res) => {
   try {
     const { email } = req.body;
     if (!email) {

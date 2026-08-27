@@ -167,8 +167,12 @@ let isMongoConnected = false;
 let connPromise = null;
 
 const connectDB = async () => {
-  const mongoUri = process.env.MONGODB_URI;
+  let mongoUri = (process.env.MONGODB_URI || '').trim();
   if (!mongoUri) {
+    return false;
+  }
+  if (mongoUri.includes('<username>') || mongoUri.includes('<password>') || mongoUri.includes('<db_password>')) {
+    console.warn('⚠️ MONGODB_URI contains placeholder brackets like <username> or <password>. Please remove < > brackets and insert your actual username and password.');
     return false;
   }
   if (mongoose.connection.readyState >= 1) {
