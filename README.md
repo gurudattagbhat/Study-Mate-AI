@@ -3,6 +3,7 @@
 [![Node.js](https://img.shields.io/badge/Node.js-v18%2B-339933?logo=nodedotjs&logoColor=white)](https://nodejs.org/)
 [![Express](https://img.shields.io/badge/Express-4.x-000000?logo=express&logoColor=white)](https://expressjs.com/)
 [![Groq AI](https://img.shields.io/badge/AI_Engine-Groq_LLaMA_3.3-F05032?logo=fastapi&logoColor=white)](https://groq.com/)
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 **Study Mate AI** is a modern, feature-packed web application designed to accelerate student learning, exam revision, and academic organization. Powered by high-speed Groq AI models, Study Mate AI transforms course notes, PDFs, and whiteboard photos into interactive study tools, practice quizzes, 3D flashcards, and simulated oral viva exams.
@@ -249,6 +250,20 @@ If you want persistent cloud storage across container restarts:
 2. Create a free **M0 Cluster** (512MB storage forever free).
 3. Copy your MongoDB Connection String (`mongodb+srv://<user>:<password>@cluster0.mongodb.net/studymate`).
 4. Add `MONGODB_URI` to your Render Environment Variables!
+
+---
+
+### 🚀 Deploying on Render
+
+Study Mate AI includes native support for hosting on [Render](https://render.com) using the included `render.yaml` Blueprint or standard Web Service configuration.
+
+#### 1-Click / Blueprint Deployment:
+1. Push your repository to GitHub or GitLab.
+2. In [Render Dashboard](https://dashboard.render.com/), click **New +** -> **Blueprint**.
+3. Select your repository. Render will automatically detect `render.yaml` and configure the build and start commands.
+4. Set your `GROQ_API_KEY` and optional `MONGODB_URI` environment variables and click **Apply**.
+
+📖 **For detailed step-by-step instructions, see [RENDER_DEPLOYMENT.md](RENDER_DEPLOYMENT.md).**
 
 ---
 

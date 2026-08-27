@@ -32,6 +32,16 @@ app.use(async (req, res, next) => {
 // Static frontend assets
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Health check endpoint for zero-downtime hosting platforms like Render
+app.get('/api/health', (req, res) => {
+  res.status(200).json({
+    success: true,
+    status: 'healthy',
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime()
+  });
+});
+
 // API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/ai', aiRoutes);
@@ -59,9 +69,9 @@ app.get('*', (req, res) => {
 // Start server locally when executed directly
 if (require.main === module) {
   connectDB().then(() => {
-    app.listen(PORT, () => {
+    app.listen(PORT, '0.0.0.0', () => {
       console.log(`\n==================================================`);
-      console.log(`🚀 Study Mate AI Server running on http://localhost:${PORT}`);
+      console.log(`🚀 Study Mate AI Server running on http://0.0.0.0:${PORT}`);
       console.log(`🎨 Themes: Light Mode (Default Warm Slate) & Slate Dark Mode`);
       console.log(`==================================================\n`);
     });
