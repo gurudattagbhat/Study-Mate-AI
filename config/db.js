@@ -180,7 +180,7 @@ const connectDB = async () => {
   }
   connPromise = (async () => {
     try {
-      await mongoose.connect(mongoUri);
+      await mongoose.connect(mongoUri, { serverSelectionTimeoutMS: 5000 });
       isMongoConnected = true;
       console.log('⚡ Connected to MongoDB successfully.');
       return true;
