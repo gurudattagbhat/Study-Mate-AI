@@ -75,14 +75,17 @@ router.post(['/signup/request-otp', '/signup/otp'], async (req, res) => {
     console.log(`🔑 [Signup OTP] Generated code for ${normalizedEmail}: ${otpCode}`);
     const emailResult = await sendOtpEmail(normalizedEmail, otpCode);
 
+    if (!emailResult.success) {
+      return res.status(400).json({
+        success: false,
+        message: `Failed to send email to ${normalizedEmail}: ${emailResult.error || 'SMTP Error'}`
+      });
+    }
+
     res.json({
       success: true,
       email: normalizedEmail,
-      otpCode,
-      emailSent: emailResult.success,
-      message: emailResult.success
-        ? `Verification OTP sent to ${normalizedEmail} via Gmail!`
-        : `OTP code generated for ${normalizedEmail}. (Demo OTP Code: ${otpCode})`
+      message: `Verification OTP sent to ${normalizedEmail} via Gmail!`
     });
 
   } catch (error) {
@@ -293,14 +296,17 @@ router.post(['/forgot-password/request-otp', '/forgot-password/otp'], async (req
 
     const emailResult = await sendOtpEmail(normalizedEmail, otpCode);
 
+    if (!emailResult.success) {
+      return res.status(400).json({
+        success: false,
+        message: `Failed to send reset email to ${normalizedEmail}: ${emailResult.error || 'SMTP Error'}`
+      });
+    }
+
     res.json({
       success: true,
       email: normalizedEmail,
-      otpCode,
-      emailSent: emailResult.success,
-      message: emailResult.success 
-        ? `OTP code sent to ${normalizedEmail} via Gmail!` 
-        : `OTP code generated for ${normalizedEmail}. (Demo OTP Code: ${otpCode})`
+      message: `OTP code sent to ${normalizedEmail} via Gmail!`
     });
 
   } catch (error) {

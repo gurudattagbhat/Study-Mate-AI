@@ -15,13 +15,7 @@ function getTransporter() {
   }
 
   return nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true,
-    family: 4, // Force IPv4 addressing for cloud hosting compatibility (Render/Vercel)
-    connectionTimeout: 4000, // 4s timeout to prevent hanging UI
-    greetingTimeout: 4000,
-    socketTimeout: 4000,
+    service: 'gmail',
     auth: { user, pass }
   });
 }
