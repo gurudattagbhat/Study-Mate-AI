@@ -4,7 +4,9 @@ const nodemailer = require('nodemailer');
 const activeOtps = new Map();
 
 /**
- * Get Nodemailer Transporter dynamically with current process.env variables
+ * Get Nodemailer Transporter dynamically with current process.env variables.
+ * Explicitly configured for cloud hosts (Render, Vercel, Heroku) by forcing IPv4 (family: 4)
+ * and adding socket timeouts to prevent hanging connection requests.
  */
 function getTransporter() {
   const user = (process.env.EMAIL_USER || '').trim();
@@ -15,9 +17,46 @@ function getTransporter() {
   }
 
   return nodemailer.createTransport({
-    service: 'gmail',
-    auth: { user, pass }
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true, // Use SSL/TLS
+    auth: {
+      user: user,
+      pass: pass
+    },
+    family: 4,                  // Force IPv4 to prevent IPv6 DNS/routing connection timeouts on Render
+    connectionTimeout: 10000,  // 10s socket connection timeout
+    greetingTimeout: 10000,    // 10s SMTP greeting timeout
+    socketTimeout: 15000,      // 15s socket activity timeout
+    dnsTimeout: 5000           // 5s DNS resolution timeout
   });
+}
+
+/**
+ * Verify SMTP Transporter connection for diagnostic checks
+ */
+async function verifySmtpConnection() {
+  const emailUser = (process.env.EMAIL_USER || '').trim();
+  const emailPass = (process.env.EMAIL_PASS || '').replace(/\s+/g, '');
+
+  if (!emailUser || !emailPass) {
+    return { 
+      success: false, 
+      message: 'EMAIL_USER or EMAIL_PASS environment variables are not configured in Render Dashboard.' 
+    };
+  }
+
+  const transporter = getTransporter();
+  try {
+    const verifyPromise = transporter.verify();
+    const timeoutPromise = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error('SMTP connection verification timed out after 8 seconds.')), 8000)
+    );
+    await Promise.race([verifyPromise, timeoutPromise]);
+    return { success: true, message: 'Gmail SMTP connection verified successfully!' };
+  } catch (err) {
+    return { success: false, message: `SMTP Verification Failed: ${err.message}` };
+  }
 }
 
 /**
@@ -28,10 +67,10 @@ async function sendOtpEmail(email, otpCode) {
   const emailPass = (process.env.EMAIL_PASS || '').replace(/\s+/g, '');
 
   if (!emailUser || !emailPass) {
-    console.error('❌ [Nodemailer Error] Cannot send email: EMAIL_USER or EMAIL_PASS environment variables are missing on Vercel.');
+    console.error('❌ [Nodemailer Error] Cannot send email: EMAIL_USER or EMAIL_PASS environment variables are missing on Render.');
     return { 
       success: false, 
-      error: 'SMTP credentials missing on Vercel. Please set EMAIL_USER and EMAIL_PASS in Vercel project environment variables.' 
+      error: 'SMTP credentials missing on server. Please set EMAIL_USER and EMAIL_PASS environment variables in Render Dashboard.' 
     };
   }
 
@@ -72,7 +111,12 @@ async function sendOtpEmail(email, otpCode) {
   };
 
   try {
-    const info = await transporter.sendMail(mailOptions);
+    const sendPromise = transporter.sendMail(mailOptions);
+    const timeoutPromise = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error('Gmail SMTP dispatch timed out (10s limit). Verify EMAIL_PASS App Password & Render environment variables.')), 10000)
+    );
+
+    const info = await Promise.race([sendPromise, timeoutPromise]);
     console.log(`📧 [Nodemailer Gmail] OTP Email sent to ${email} (MessageId: ${info.messageId})`);
     return { success: true, messageId: info.messageId };
   } catch (error) {
@@ -136,5 +180,7 @@ function verifyOtp(email, inputCode) {
 module.exports = {
   sendOtp,
   verifyOtp,
-  sendOtpEmail
+  sendOtpEmail,
+  verifySmtpConnection
 };
+

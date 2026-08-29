@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 const { isMongoConnected, jsonStore } = require('../config/db');
-const { sendOtpEmail } = require('../services/otpService');
+const { sendOtpEmail, verifySmtpConnection } = require('../services/otpService');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'studymate_default_jwt_secret_key';
 if (!process.env.JWT_SECRET) {
@@ -527,4 +527,16 @@ router.post('/delete-account', authMiddleware, async (req, res) => {
   res.json({ success: true, message: 'Account deleted permanently.' });
 });
 
+// 10. DIAGNOSTIC ROUTE: TEST GMAIL SMTP ON RENDER
+router.get('/test-email', async (req, res) => {
+  const smtpResult = await verifySmtpConnection();
+  res.json({
+    emailUserConfigured: !!process.env.EMAIL_USER,
+    emailUserPreview: process.env.EMAIL_USER ? `${process.env.EMAIL_USER.substring(0, 4)}***` : 'NOT_CONFIGURED',
+    emailPassConfigured: !!process.env.EMAIL_PASS,
+    smtpStatus: smtpResult
+  });
+});
+
 module.exports = { router, authMiddleware };
+
