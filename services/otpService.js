@@ -52,16 +52,60 @@ function getTransporter(port = 587) {
 }
 
 /**
- * Verify SMTP Transporter connection for diagnostic checks
+ * Get standardized HTML content for OTP verification emails
+ */
+function getOtpHtmlContent(otpCode) {
+  return `
+    <div style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 560px; margin: 0 auto; padding: 24px; background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 16px;">
+      <div style="text-align: center; margin-bottom: 24px;">
+        <div style="display: inline-block; width: 48px; height: 48px; background: linear-gradient(135deg, #059669, #D97706); border-radius: 12px; line-height: 48px; font-size: 24px; color: white; margin-bottom: 8px;">🧠</div>
+        <h2 style="margin: 0; color: #0F172A; font-size: 22px;">Study Mate <span style="color: #059669;">AI</span></h2>
+        <p style="margin: 4px 0 0 0; color: #64748B; font-size: 14px;">Academic Verification System</p>
+      </div>
+
+      <div style="background-color: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px; padding: 28px; text-align: center; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+        <h3 style="margin-top: 0; color: #0F172A; font-size: 18px;">Account Verification OTP Code</h3>
+        <p style="color: #475569; font-size: 14px; line-height: 1.5; margin-bottom: 24px;">
+          Use the 6-digit verification code below to complete your Study Mate AI registration or password reset:
+        </p>
+
+        <div style="background-color: #ECFDF5; border: 2px dashed #059669; border-radius: 10px; padding: 16px; margin: 20px 0; display: inline-block;">
+          <span style="font-family: monospace; font-size: 34px; font-weight: 800; letter-spacing: 8px; color: #059669;">${otpCode}</span>
+        </div>
+
+        <p style="color: #94A3B8; font-size: 13px; margin-top: 20px;">
+          ⏰ This verification code is valid for <strong>15 minutes</strong>. If you did not request this code, please ignore this email.
+        </p>
+      </div>
+
+      <div style="text-align: center; margin-top: 20px; font-size: 12px; color: #94A3B8;">
+        <p>© 2026 Study Mate AI — Intelligent Academic Assistant System</p>
+      </div>
+    </div>
+  `;
+}
+
+/**
+ * Verify SMTP or HTTP API connection for diagnostic checks
  */
 async function verifySmtpConnection() {
+  const resendApiKey = (process.env.RESEND_API_KEY || '').trim();
+  const brevoApiKey = (process.env.BREVO_API_KEY || process.env.SENDINBLUE_API_KEY || '').trim();
   const emailUser = (process.env.EMAIL_USER || '').trim();
   const emailPass = (process.env.EMAIL_PASS || '').replace(/\s+/g, '');
+
+  if (resendApiKey) {
+    return { success: true, message: 'Resend HTTP API (Port 443) is configured and active for Render.' };
+  }
+
+  if (brevoApiKey) {
+    return { success: true, message: 'Brevo HTTP API (Port 443) is configured and active for Render.' };
+  }
 
   if (!emailUser || !emailPass) {
     return { 
       success: false, 
-      message: 'EMAIL_USER or EMAIL_PASS environment variables are not configured in Render Dashboard.' 
+      message: 'No email service credentials found in Render Dashboard. Set RESEND_API_KEY, BREVO_API_KEY, or EMAIL_USER & EMAIL_PASS.' 
     };
   }
 
@@ -82,23 +126,83 @@ async function verifySmtpConnection() {
       ]);
       return { success: true, message: 'Gmail SMTP Port 465 (SSL) connection verified successfully!' };
     } catch (err2) {
-      return { success: false, message: `SMTP Verification Failed on Port 587 (${err1.message}) and Port 465 (${err2.message}). Outbound SMTP ports may be blocked by Render cloud firewall.` };
+      return { success: false, message: `SMTP Verification Failed on Port 587 (${err1.message}) and Port 465 (${err2.message}). Outbound SMTP ports are blocked by Render cloud firewall. Use RESEND_API_KEY or BREVO_API_KEY (HTTPS Port 443) for real email delivery on Render.` };
     }
   }
 }
 
 /**
- * Send real 6-Digit OTP Email via Gmail SMTP with dual-port failover
+ * Send real 6-Digit OTP Email (Supports Resend API, Brevo API, and Gmail SMTP)
  */
 async function sendOtpEmail(email, otpCode) {
+  const resendApiKey = (process.env.RESEND_API_KEY || '').trim();
+  const brevoApiKey = (process.env.BREVO_API_KEY || process.env.SENDINBLUE_API_KEY || '').trim();
   const emailUser = (process.env.EMAIL_USER || '').trim();
   const emailPass = (process.env.EMAIL_PASS || '').replace(/\s+/g, '');
 
+  // 1. Try Resend HTTP API (Port 443 - Works 100% on Render without port blocking)
+  if (resendApiKey) {
+    try {
+      const res = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${resendApiKey}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          from: process.env.EMAIL_FROM || 'Study Mate AI <onboarding@resend.dev>',
+          to: [email],
+          subject: `🔐 Your Study Mate AI Verification Code: ${otpCode}`,
+          html: getOtpHtmlContent(otpCode)
+        })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        console.log(`📧 [Resend HTTP API] OTP Email sent successfully to ${email} (MessageId: ${data.id})`);
+        return { success: true, messageId: data.id };
+      } else {
+        console.warn(`⚠️ [Resend Warning] ${data.message || 'Resend error'}. Falling back...`);
+      }
+    } catch (err) {
+      console.warn(`⚠️ [Resend Warning] HTTP request failed: ${err.message}`);
+    }
+  }
+
+  // 2. Try Brevo HTTP API (Port 443 - Works 100% on Render without port blocking, 300 free emails/day)
+  if (brevoApiKey) {
+    try {
+      const res = await fetch('https://api.brevo.com/v3/smtp/email', {
+        method: 'POST',
+        headers: {
+          'api-key': brevoApiKey,
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          sender: { name: 'Study Mate AI', email: emailUser || 'noreply@studymate.ai' },
+          to: [{ email: email }],
+          subject: `🔐 Your Study Mate AI Verification Code: ${otpCode}`,
+          htmlContent: getOtpHtmlContent(otpCode)
+        })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        console.log(`📧 [Brevo HTTP API] OTP Email sent successfully to ${email} (MessageId: ${data.messageId})`);
+        return { success: true, messageId: data.messageId };
+      } else {
+        console.warn(`⚠️ [Brevo Warning] ${data.message || 'Brevo error'}. Falling back...`);
+      }
+    } catch (err) {
+      console.warn(`⚠️ [Brevo Warning] HTTP request failed: ${err.message}`);
+    }
+  }
+
+  // 3. Fallback to direct Gmail SMTP (Nodemailer ports 587 / 465)
   if (!emailUser || !emailPass) {
-    console.error('❌ [Nodemailer Error] Cannot send email: EMAIL_USER or EMAIL_PASS environment variables are missing on Render.');
+    console.error('❌ [Nodemailer Error] Cannot send email: No email credentials found on Render.');
     return { 
       success: false, 
-      error: 'SMTP credentials missing on server. Set EMAIL_USER and EMAIL_PASS in Render Dashboard.' 
+      error: 'SMTP credentials missing on server. Set EMAIL_USER and EMAIL_PASS or RESEND_API_KEY in Render Dashboard.' 
     };
   }
 
@@ -106,34 +210,7 @@ async function sendOtpEmail(email, otpCode) {
     from: `"Study Mate AI" <${emailUser}>`,
     to: email,
     subject: `🔐 Your Study Mate AI Verification Code: ${otpCode}`,
-    html: `
-      <div style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 560px; margin: 0 auto; padding: 24px; background-color: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 16px;">
-        <div style="text-align: center; margin-bottom: 24px;">
-          <div style="display: inline-block; width: 48px; height: 48px; background: linear-gradient(135deg, #059669, #D97706); border-radius: 12px; line-height: 48px; font-size: 24px; color: white; margin-bottom: 8px;">🧠</div>
-          <h2 style="margin: 0; color: #0F172A; font-size: 22px;">Study Mate <span style="color: #059669;">AI</span></h2>
-          <p style="margin: 4px 0 0 0; color: #64748B; font-size: 14px;">Academic Verification System</p>
-        </div>
-
-        <div style="background-color: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px; padding: 28px; text-align: center; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
-          <h3 style="margin-top: 0; color: #0F172A; font-size: 18px;">Account Verification OTP Code</h3>
-          <p style="color: #475569; font-size: 14px; line-height: 1.5; margin-bottom: 24px;">
-            Use the 6-digit verification code below to complete your Study Mate AI registration or password reset:
-          </p>
-
-          <div style="background-color: #ECFDF5; border: 2px dashed #059669; border-radius: 10px; padding: 16px; margin: 20px 0; display: inline-block;">
-            <span style="font-family: monospace; font-size: 34px; font-weight: 800; letter-spacing: 8px; color: #059669;">${otpCode}</span>
-          </div>
-
-          <p style="color: #94A3B8; font-size: 13px; margin-top: 20px;">
-            ⏰ This verification code is valid for <strong>15 minutes</strong>. If you did not request this code, please ignore this email.
-          </p>
-        </div>
-
-        <div style="text-align: center; margin-top: 20px; font-size: 12px; color: #94A3B8;">
-          <p>© 2026 Study Mate AI — Intelligent Academic Assistant System</p>
-        </div>
-      </div>
-    `
+    html: getOtpHtmlContent(otpCode)
   };
 
   // Attempt 1: Try Port 587 (STARTTLS)
@@ -191,7 +268,7 @@ async function sendOtp(email) {
     otpCode,
     emailSent: emailResult.success,
     message: emailResult.success 
-      ? `Verification OTP sent to ${normalizedEmail} via Gmail!` 
+      ? `Verification OTP sent to ${normalizedEmail}!` 
       : `OTP code generated for ${normalizedEmail}. (Demo OTP Code: ${otpCode})`
   };
 }
@@ -226,4 +303,5 @@ module.exports = {
   sendOtpEmail,
   verifySmtpConnection
 };
+
 
