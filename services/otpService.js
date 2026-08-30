@@ -8,7 +8,12 @@ const activeOtps = new Map();
  * Explicitly configured for cloud hosts (Render, Vercel, Heroku) by forcing IPv4 (family: 4)
  * and adding socket timeouts to prevent hanging connection requests.
  */
-function getTransporter() {
+/**
+ * Get Nodemailer Transporter dynamically with current process.env variables.
+ * Supports port 587 (STARTTLS) and port 465 (SSL) with explicit IPv4 (family: 4)
+ * and tls fallback settings for cloud environments like Render.
+ */
+function getTransporter(port = 587) {
   const user = (process.env.EMAIL_USER || '').trim();
   const pass = (process.env.EMAIL_PASS || '').replace(/\s+/g, '');
 
@@ -16,20 +21,34 @@ function getTransporter() {
     console.warn('⚠️ [Nodemailer Warning] EMAIL_USER or EMAIL_PASS is not set in environment variables!');
   }
 
-  return nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true, // Use SSL/TLS
-    auth: {
-      user: user,
-      pass: pass
-    },
-    family: 4,                  // Force IPv4 to prevent IPv6 DNS/routing connection timeouts on Render
-    connectionTimeout: 10000,  // 10s socket connection timeout
-    greetingTimeout: 10000,    // 10s SMTP greeting timeout
-    socketTimeout: 15000,      // 15s socket activity timeout
-    dnsTimeout: 5000           // 5s DNS resolution timeout
-  });
+  if (port === 587) {
+    return nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 587,
+      secure: false, // STARTTLS
+      requireTLS: true,
+      auth: { user, pass },
+      family: 4,                  // Force IPv4
+      connectionTimeout: 5000,   // 5s connection timeout
+      greetingTimeout: 5000,     // 5s greeting timeout
+      socketTimeout: 6000,       // 6s socket timeout
+      dnsTimeout: 4000,          // 4s DNS timeout
+      tls: { rejectUnauthorized: false }
+    });
+  } else {
+    return nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true, // SSL/TLS
+      auth: { user, pass },
+      family: 4,                  // Force IPv4
+      connectionTimeout: 5000,   // 5s connection timeout
+      greetingTimeout: 5000,     // 5s greeting timeout
+      socketTimeout: 6000,       // 6s socket timeout
+      dnsTimeout: 4000,          // 4s DNS timeout
+      tls: { rejectUnauthorized: false }
+    });
+  }
 }
 
 /**
@@ -46,21 +65,30 @@ async function verifySmtpConnection() {
     };
   }
 
-  const transporter = getTransporter();
+  // Try port 587 first, then port 465
   try {
-    const verifyPromise = transporter.verify();
-    const timeoutPromise = new Promise((_, reject) =>
-      setTimeout(() => reject(new Error('SMTP connection verification timed out after 8 seconds.')), 8000)
-    );
-    await Promise.race([verifyPromise, timeoutPromise]);
-    return { success: true, message: 'Gmail SMTP connection verified successfully!' };
-  } catch (err) {
-    return { success: false, message: `SMTP Verification Failed: ${err.message}` };
+    const t587 = getTransporter(587);
+    await Promise.race([
+      t587.verify(),
+      new Promise((_, r) => setTimeout(() => r(new Error('Port 587 timeout')), 5000))
+    ]);
+    return { success: true, message: 'Gmail SMTP Port 587 (STARTTLS) connection verified successfully!' };
+  } catch (err1) {
+    try {
+      const t465 = getTransporter(465);
+      await Promise.race([
+        t465.verify(),
+        new Promise((_, r) => setTimeout(() => r(new Error('Port 465 timeout')), 5000))
+      ]);
+      return { success: true, message: 'Gmail SMTP Port 465 (SSL) connection verified successfully!' };
+    } catch (err2) {
+      return { success: false, message: `SMTP Verification Failed on Port 587 (${err1.message}) and Port 465 (${err2.message}). Outbound SMTP ports may be blocked by Render cloud firewall.` };
+    }
   }
 }
 
 /**
- * Send real 6-Digit OTP Email via Gmail SMTP
+ * Send real 6-Digit OTP Email via Gmail SMTP with dual-port failover
  */
 async function sendOtpEmail(email, otpCode) {
   const emailUser = (process.env.EMAIL_USER || '').trim();
@@ -70,11 +98,9 @@ async function sendOtpEmail(email, otpCode) {
     console.error('❌ [Nodemailer Error] Cannot send email: EMAIL_USER or EMAIL_PASS environment variables are missing on Render.');
     return { 
       success: false, 
-      error: 'SMTP credentials missing on server. Please set EMAIL_USER and EMAIL_PASS environment variables in Render Dashboard.' 
+      error: 'SMTP credentials missing on server. Set EMAIL_USER and EMAIL_PASS in Render Dashboard.' 
     };
   }
-
-  const transporter = getTransporter();
 
   const mailOptions = {
     from: `"Study Mate AI" <${emailUser}>`,
@@ -110,18 +136,35 @@ async function sendOtpEmail(email, otpCode) {
     `
   };
 
+  // Attempt 1: Try Port 587 (STARTTLS)
   try {
-    const sendPromise = transporter.sendMail(mailOptions);
+    const transporter587 = getTransporter(587);
+    const sendPromise = transporter587.sendMail(mailOptions);
     const timeoutPromise = new Promise((_, reject) =>
-      setTimeout(() => reject(new Error('Gmail SMTP dispatch timed out (10s limit). Verify EMAIL_PASS App Password & Render environment variables.')), 10000)
+      setTimeout(() => reject(new Error('Port 587 STARTTLS timed out after 5s')), 5000)
     );
 
     const info = await Promise.race([sendPromise, timeoutPromise]);
-    console.log(`📧 [Nodemailer Gmail] OTP Email sent to ${email} (MessageId: ${info.messageId})`);
+    console.log(`📧 [Nodemailer Gmail Port 587] OTP Email sent to ${email} (MessageId: ${info.messageId})`);
     return { success: true, messageId: info.messageId };
-  } catch (error) {
-    console.error('❌ [Nodemailer Error] Failed to send email via Gmail:', error.message);
-    return { success: false, error: error.message };
+  } catch (err587) {
+    console.warn(`⚠️ [Nodemailer Warning] Port 587 failed/timed out (${err587.message}). Trying Port 465 (SSL)...`);
+  }
+
+  // Attempt 2: Try Port 465 (SSL)
+  try {
+    const transporter465 = getTransporter(465);
+    const sendPromise = transporter465.sendMail(mailOptions);
+    const timeoutPromise = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error('Port 465 SSL timed out after 5s')), 5000)
+    );
+
+    const info = await Promise.race([sendPromise, timeoutPromise]);
+    console.log(`📧 [Nodemailer Gmail Port 465] OTP Email sent to ${email} (MessageId: ${info.messageId})`);
+    return { success: true, messageId: info.messageId };
+  } catch (err465) {
+    console.error('❌ [Nodemailer Error] Both Port 587 and Port 465 timed out on Render cloud network:', err465.message);
+    return { success: false, error: 'Outbound Gmail SMTP ports (587/465) timed out on Render cloud host.' };
   }
 }
 
