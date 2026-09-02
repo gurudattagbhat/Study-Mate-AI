@@ -11,6 +11,15 @@
       "groqApiKey": "",
       "otp": null,
       "otpExpires": null
+    },
+    {
+      "id": "user-1788362054172",
+      "name": "Test User",
+      "email": "testuser_1788362054054@example.com",
+      "passwordHash": "$2a$10$mVwFyT7BDQ.jp1OauPTsQuehHVEPc0ongDJs6K0PshWuAq/bEPqhK",
+      "streak": 1,
+      "exp": 100,
+      "level": 1
     }
   ],
   "notes": [
@@ -156,5 +165,6 @@
       "time": "Tomorrow at 11:59 PM",
       "active": true
     }
-  ]
+  ],
+  "pendingSignups": []
 }

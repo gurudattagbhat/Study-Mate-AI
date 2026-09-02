@@ -1,5 +1,4 @@
 # 🧠 Study Mate AI — Intelligent AI Academic Companion
-# LIVE AT https://study-mate-ai-wlgk.onrender.com
 
 [![Node.js](https://img.shields.io/badge/Node.js-v18%2B-339933?logo=nodedotjs&logoColor=white)](https://nodejs.org/)
 [![Express](https://img.shields.io/badge/Express-4.x-000000?logo=express&logoColor=white)](https://expressjs.com/)

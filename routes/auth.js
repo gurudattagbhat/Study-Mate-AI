@@ -3,6 +3,7 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
+const PendingSignup = require('../models/PendingSignup');
 const { isMongoConnected, jsonStore } = require('../config/db');
 const { sendOtpEmail, verifySmtpConnection } = require('../services/otpService');
 
@@ -11,8 +12,24 @@ if (!process.env.JWT_SECRET) {
   console.warn('⚠️ [Security Warning] JWT_SECRET environment variable is not set in .env! Using fallback development key.');
 }
 
-// In-memory store for pending signup registrations with OTP
+// In-memory store for pending signup registrations with OTP (Fast primary cache)
 const pendingSignups = new Map();
+
+// Helper to remove pending signup from all persistence layers
+async function deletePendingSignup(normalizedEmail) {
+  pendingSignups.delete(normalizedEmail);
+  try {
+    if (isMongoConnected()) {
+      await PendingSignup.deleteOne({ email: normalizedEmail });
+    } else {
+      const pendingList = jsonStore.get('pendingSignups');
+      const filtered = pendingList.filter(p => p.email.toLowerCase() !== normalizedEmail);
+      jsonStore.set('pendingSignups', filtered);
+    }
+  } catch (err) {
+    console.warn(`⚠️ Warning clearing pending signup for ${normalizedEmail}:`, err.message);
+  }
+}
 
 // Auth Middleware
 const authMiddleware = async (req, res, next) => {
@@ -62,15 +79,36 @@ router.post(['/signup/request-otp', '/signup/otp'], async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const passwordHash = await bcrypt.hash(password, salt);
     const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
-    const expiresAt = Date.now() + 15 * 60 * 1000;
+    const expiresAtDate = new Date(Date.now() + 15 * 60 * 1000);
+    const expiresAtMs = expiresAtDate.getTime();
 
+    // 1. Memory cache
     pendingSignups.set(normalizedEmail, {
       name,
       email: normalizedEmail,
       passwordHash,
       otpCode,
-      expiresAt
+      expiresAt: expiresAtMs
     });
+
+    // 2. Persistent storage (Survives Render process restarts / cold starts)
+    if (isMongoConnected()) {
+      await PendingSignup.findOneAndUpdate(
+        { email: normalizedEmail },
+        { name, email: normalizedEmail, passwordHash, otpCode, expiresAt: expiresAtDate },
+        { upsert: true, new: true }
+      );
+    } else {
+      const pendingList = jsonStore.get('pendingSignups');
+      const existingIdx = pendingList.findIndex(p => p.email.toLowerCase() === normalizedEmail);
+      const pendingRecord = { name, email: normalizedEmail, passwordHash, otpCode, expiresAt: expiresAtMs };
+      if (existingIdx !== -1) {
+        pendingList[existingIdx] = pendingRecord;
+      } else {
+        pendingList.push(pendingRecord);
+      }
+      jsonStore.set('pendingSignups', pendingList);
+    }
 
     console.log(`🔑 [Signup OTP] Generated code for ${normalizedEmail}: ${otpCode}`);
     const emailResult = await sendOtpEmail(normalizedEmail, otpCode);
@@ -87,7 +125,7 @@ router.post(['/signup/request-otp', '/signup/otp'], async (req, res) => {
     res.json({
       success: true,
       email: normalizedEmail,
-      message: `Verification OTP sent to ${normalizedEmail} via Gmail!`
+      message: `Verification OTP sent to ${normalizedEmail}!`
     });
 
   } catch (error) {
@@ -105,10 +143,35 @@ router.post('/signup/verify-otp', async (req, res) => {
     }
 
     const normalizedEmail = email.toLowerCase().trim();
-    const pendingData = pendingSignups.get(normalizedEmail);
+    let pendingData = pendingSignups.get(normalizedEmail);
+
+    // Fallback: Check MongoDB or jsonStore if in-memory cache was cleared by server restart on Render
+    if (!pendingData) {
+      if (isMongoConnected()) {
+        const dbPending = await PendingSignup.findOne({ email: normalizedEmail });
+        if (dbPending) {
+          pendingData = {
+            name: dbPending.name,
+            email: dbPending.email,
+            passwordHash: dbPending.passwordHash,
+            otpCode: dbPending.otpCode,
+            expiresAt: new Date(dbPending.expiresAt).getTime()
+          };
+        }
+      } else {
+        const pendingList = jsonStore.get('pendingSignups');
+        const jsonPending = pendingList.find(p => p.email.toLowerCase() === normalizedEmail);
+        if (jsonPending) {
+          pendingData = {
+            ...jsonPending,
+            expiresAt: new Date(jsonPending.expiresAt).getTime()
+          };
+        }
+      }
+    }
 
     if (!pendingData) {
-      return res.status(400).json({ success: false, message: 'No pending registration found for this email.' });
+      return res.status(400).json({ success: false, message: 'No pending registration found for this email. Please request a new OTP code.' });
     }
 
     if (pendingData.otpCode !== otpCode.trim()) {
@@ -116,7 +179,7 @@ router.post('/signup/verify-otp', async (req, res) => {
     }
 
     if (Date.now() > pendingData.expiresAt) {
-      pendingSignups.delete(normalizedEmail);
+      await deletePendingSignup(normalizedEmail);
       return res.status(400).json({ success: false, message: 'OTP verification code has expired. Please sign up again.' });
     }
 
@@ -147,7 +210,7 @@ router.post('/signup/verify-otp', async (req, res) => {
       jsonStore.set('users', users);
     }
 
-    pendingSignups.delete(normalizedEmail);
+    await deletePendingSignup(normalizedEmail);
 
     const token = jwt.sign({ id: newUser._id ? newUser._id.toString() : newUser.id, name: newUser.name, email: newUser.email }, JWT_SECRET, { expiresIn: '7d' });
 
