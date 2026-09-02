@@ -26,4 +26,6 @@ services:
         sync: false
       - key: BREVO_API_KEY
         sync: false
+      - key: SENDGRID_API_KEY
+        sync: false
 
